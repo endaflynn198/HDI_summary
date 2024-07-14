@@ -1,0 +1,114 @@
+---
+title: "HDIsummary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{HDIsummary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+This vignette explains how to use the `HDIsummary` library to read in, summarise, print, and plot HDI data for different countries. This allows users to easily compare HDI data across countries.
+
+We will compare two difference countries: Nigeria and Singapore.
+
+
+We begin by reading in our data below using the `read_HDI` function.
+```{r setup}
+library(HDIsummary)
+
+nga_link = "https://data.humdata.org/dataset/85a5d168-88c9-43fe-b535-f4215d9177f3/resource/b1dceca0-1dbc-4bc5-aca6-9c8c59b4e505/download/hdro_indicators_nga.csv"
+
+sgp_link = "https://data.humdata.org/dataset/0f45cb7e-e702-462e-94ba-c746f79cefc5/resource/95ec52d0-5bba-417a-b406-a09e58506ea3/download/hdro_indicators_sgp.csv"
+
+HDIdata_sgp = read_HDI(sgp_link)
+HDIdata_nga = read_HDI(nga_link)
+```
+
+
+## Print Function
+The print function returns the number of observations, the column names, the country name, the individual indicators and the indices which they belong to.
+
+### Singapore
+
+```{r}
+print(HDIdata_sgp)
+```
+
+### Nigeria
+
+```{r}
+print(HDIdata_nga)
+```
+
+### Singapore and Nigeria Comparison
+We can see that the indicators between the two datasets are not the same and this seems to be due to the `Multidimensional Poverty Index` not being featured in the Singapore dataset. A researcher may want to focus on the common indicators for analysis or investigate this further.
+
+
+
+## Sumary Function
+The summary function first returns the number of observations, the number of indicators, the the range of years.
+
+It then returns the mean, median, min, max, years of data, and missing values for each indicator.
+
+The final output is a summary of the data completeness for each indicator.
+
+### Singapore
+The detailed output is provided below and a researcher can pick and choose which to focus on.
+```{r}
+summary(HDIdata_sgp)
+```
+
+### Nigeria
+Again, the detailed output is provided below and a researcher can pick and choose which to focus on.
+```{r}
+summary(HDIdata_nga)
+```
+
+### Singapore and Nigeria Comparison
+We note that Singapore scores higher on most metrics as a result of its higher levels of development compared to Nigeria. However, the detailed output is unwieldy. The plot function provides a better way to easily compare countries based on key indicators.
+
+
+
+## Plot Function
+The plot function returns a `ggplot2` object which provides a visual representation of the HDI data for the country by focusing on the trend of four central indicators over time: Adolescent Birth Rate, Life Expectancy at Birth, Mean Years of Schooling, and Gross National Income Per Capita.
+
+This is particularly useful for comparing the HDI data of different countries at a glance while the summary function provides a more detailed overview of the data for researchers who wish to investigate further.
+
+### Singapore
+We see positive developments in all indicators.
+```{r plot1, fig.width=8, fig.height=6}
+p1 = plot(HDIdata_sgp)
+p1
+```
+
+### Nigeria
+For Nigeria, we also observe positive developments in all indicators.
+
+```{r plot2, fig.width=8, fig.height=6}
+p2 = plot(HDIdata_nga)
+p2
+```
+
+
+### Singapore and Nigeria Comparison
+Both countries are on positive trajectories despite the different values on their axes which reflect differing levels of development.
+
+# Conclusion
+The `HDIsummary` package provides a simple way to read in, summarise, print, and plot HDI data for different countries. 
+
+By easily comparing HDI data across countries, researchers can quickly identify trends and patterns in the data which can be used to inform further analysis and research.
+
+In this case, we highlighted two countries with differing levels of development but which are both on positive trajectories. But the package can be used to compare any two countries of interest, and a particularly interesting area of research would be to compare countries which are not necessarily on positive trajectories - a country such as Afghanistan, for example, which has been in conflict for many years.
+
+
+
+
+

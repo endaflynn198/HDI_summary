@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>HDIsummary</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">HDIsummary</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This vignette explains how to use the <code>HDIsummary</code> library
+to read in, summarise, print, and plot HDI data for different countries.
+This allows users to easily compare HDI data across countries.</p>
+<p>We will compare two difference countries: Nigeria and Singapore.</p>
+<p>We begin by reading in our data below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(HDIsummary)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>nga_link <span class="ot">=</span> <span class="st">&quot;https://data.humdata.org/dataset/85a5d168-88c9-43fe-b535-f4215d9177f3/resource/b1dceca0-1dbc-4bc5-aca6-9c8c59b4e505/download/hdro_indicators_nga.csv&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>sgp_link <span class="ot">=</span> <span class="st">&quot;https://data.humdata.org/dataset/0f45cb7e-e702-462e-94ba-c746f79cefc5/resource/95ec52d0-5bba-417a-b406-a09e58506ea3/download/hdro_indicators_sgp.csv&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>HDIdata_sgp <span class="ot">=</span> <span class="fu">read_HDI</span>(sgp_link)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>HDIdata_nga <span class="ot">=</span> <span class="fu">read_HDI</span>(nga_link)</span></code></pre></div>
+<div id="print-function" class="section level2">
+<h2>Print Function</h2>
+<p>The print function returns the number of observations, the column
+names, the country name, the individual indicators and the indices which
+they belong to.</p>
+<div id="singapore" class="section level3">
+<h3>Singapore</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">print</span>(HDIdata_sgp)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; HDIdata object with 894 observations</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; Column names:</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;  country_code</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; country_name</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; indicator_id</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; indicator_name</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; index_id</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; index_name</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; value</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; year </span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; Country:</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;  Singapore </span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; Indicators:</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;  Adolescent Birth Rate (births per 1,000 women ages 15-19)</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; Carbon dioxide emissions per capita (production) (tonnes)</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; Coefficient of human inequality</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; Difference from HDI value (%)</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; Expected Years of Schooling (years)</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt; Expected Years of Schooling, female (years)</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; Expected Years of Schooling, male (years)</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; GDI Group</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; GII Rank</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; Gross National Income Per Capita, female (2017 PPP$)</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; Gross National Income Per Capita, male (2017 PPP$)</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; Gross National Income Per Capita (2017 PPP$)</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; HDI female</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt; HDI male</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt; HDI Rank</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; Inequality in eduation</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; Inequality in income</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co">#&gt; Inequality in life expectancy</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#&gt; Life Expectancy at Birth (years)</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#&gt; Life Expectancy at Birth, female (years)</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a><span class="co">#&gt; Life Expectancy at Birth, male (years)</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co">#&gt; Labour force participation rate, female (% ages 15 and older)</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a><span class="co">#&gt; Labour force participation rate, male (% ages 15 and older)</span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a><span class="co">#&gt; Overall loss (%)</span></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="co">#&gt; Material footprint per capita (tonnes)</span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co">#&gt; Maternal Mortality Ratio (deaths per 100,000 live births)</span></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a><span class="co">#&gt; Mean Years of Schooling (years)</span></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a><span class="co">#&gt; Mean Years of Schooling, female (years)</span></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a><span class="co">#&gt; Mean Years of Schooling, male (years)</span></span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a><span class="co">#&gt; Share of seats in parliament, female (% held by women)</span></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a><span class="co">#&gt; Share of seats in parliament, male (% held by men)</span></span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a><span class="co">#&gt; Difference from HDI rank</span></span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a><span class="co">#&gt; Population with at least some secondary education, female (% ages 25 and older)</span></span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a><span class="co">#&gt; Population with at least some secondary education, male (% ages 25 and older) </span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a><span class="co">#&gt; Indices which indicators belong to:</span></span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a><span class="co">#&gt;  Gender Inequality Index</span></span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a><span class="co">#&gt; Planetary pressuresâ€“adjusted Human Development Index</span></span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a><span class="co">#&gt; Inequality-adjusted Human Development Index</span></span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a><span class="co">#&gt; Human Development Index</span></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a><span class="co">#&gt; Gender Development Index</span></span></code></pre></div>
+</div>
+<div id="nigeria" class="section level3">
+<h3>Nigeria</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">print</span>(HDIdata_nga)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; HDIdata object with 777 observations</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; Column names:</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;  country_code</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; country_name</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; indicator_id</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; indicator_name</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; index_id</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; index_name</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; value</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; year </span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; Country:</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;  Nigeria </span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; Indicators:</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;  Adolescent Birth Rate (births per 1,000 women ages 15-19)</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; Assets (%)</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; Child mortality (%)</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; Carbon dioxide emissions per capita (production) (tonnes)</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; Coefficient of human inequality</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt; Cooking fuel (%)</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; Difference from HDI value (%)</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt; Drinking water (%)</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; Electricity (%)</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt; Expected Years of Schooling (years)</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; Expected Years of Schooling, female (years)</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; Expected Years of Schooling, male (years)</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; GDI Group</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt; GII Rank</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; Gross National Income Per Capita, female (2017 PPP$)</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt; Gross National Income Per Capita, male (2017 PPP$)</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; Gross National Income Per Capita (2017 PPP$)</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt; HDI female</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt; HDI male</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="co">#&gt; HDI Rank</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="co">#&gt; Housing (%)</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt; Inequality in eduation</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt; Inequality in income</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt; Inequality in life expectancy</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt; Life Expectancy at Birth (years)</span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt; Life Expectancy at Birth, female (years)</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt; Life Expectancy at Birth, male (years)</span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt; Labour force participation rate, female (% ages 15 and older)</span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="co">#&gt; Labour force participation rate, male (% ages 15 and older)</span></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="co">#&gt; Overall loss (%)</span></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">#&gt; Material footprint per capita (tonnes)</span></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="co">#&gt; Maternal Mortality Ratio (deaths per 100,000 live births)</span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt; MPI Value (Range: 0 to 1)</span></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="co">#&gt; Mean Years of Schooling (years)</span></span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="co">#&gt; Mean Years of Schooling, female (years)</span></span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="co">#&gt; Mean Years of Schooling, male (years)</span></span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="co">#&gt; Share of seats in parliament, female (% held by women)</span></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="co">#&gt; Share of seats in parliament, male (% held by men)</span></span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="co">#&gt; Difference from HDI rank</span></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="co">#&gt; Sanitation (%)</span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="co">#&gt; School attendance (%)</span></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="co">#&gt; Population with at least some secondary education, female (% ages 25 and older)</span></span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="co">#&gt; Population with at least some secondary education, male (% ages 25 and older)</span></span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="co">#&gt; Years of schooling (%) </span></span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a><span class="co">#&gt; Indices which indicators belong to:</span></span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="co">#&gt;  Gender Inequality Index</span></span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a><span class="co">#&gt; Multidimensional Poverty Index</span></span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a><span class="co">#&gt; Planetary pressuresâ€“adjusted Human Development Index</span></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a><span class="co">#&gt; Inequality-adjusted Human Development Index</span></span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a><span class="co">#&gt; Human Development Index</span></span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a><span class="co">#&gt; Gender Development Index</span></span></code></pre></div>
+</div>
+<div id="singapore-and-nigeria-comparison" class="section level3">
+<h3>Singapore and Nigeria Comparison</h3>
+<p>We can see that the indicators between the two datasets are not the
+same and this seems to be due to the
+<code>Multidimensional Poverty Index</code> not being featured in the
+Singapore dataset. A researcher may want to focus on the common
+indicators for analysis or investigate this further.</p>
+</div>
+</div>
+<div id="sumary-function" class="section level2">
+<h2>Sumary Function</h2>
+<p>The summary function first returns the number of observations, the
+number of indicators, the the range of years.</p>
+<p>It then returns the mean, median, min, max, years of data, and
+missing values for each indicator.</p>
+<p>The final output is a summary of the data completeness for each
+indicator.</p>
+<div id="singapore-1" class="section level3">
+<h3>Singapore</h3>
+<p>The detailed output is provided below and a researcher can pick and
+choose which to focus on.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">summary</span>(HDIdata_sgp)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; HDIdata Summary</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Observations: 894 </span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Indicators: 34 </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; Years: 1990 2022 </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; Summary for Adolescent Birth Rate (births per 1,000 women ages 15-19) :</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; Mean: 5.636636 </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; Median: 6.421 </span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; Min: 2.275 </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; Max: 8.918 </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; Summary for Carbon dioxide emissions per capita (production) (tonnes) :</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; Mean: 10.69888 </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; Median: 10.023 </span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; Min: 5.758 </span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; Max: 17.474 </span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; Summary for Coefficient of human inequality :</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; Mean: 13.03192 </span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; Median: 13.096 </span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; Min: 12.534 </span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt; Max: 13.51 </span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; Years of data: 13 </span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; Summary for Difference from HDI value (%) :</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; Mean: 21.34021 </span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt; Median: 20.128 </span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt; Min: 15.784 </span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; Max: 35.816 </span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; Summary for Expected Years of Schooling (years) :</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; Mean: 15.93297 </span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; Median: 15.938 </span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt; Min: 14.875 </span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt; Max: 16.903 </span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1"></a><span class="co">#&gt; Summary for Expected Years of Schooling, female (years) :</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1"></a><span class="co">#&gt; Mean: 16.08282 </span></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1"></a><span class="co">#&gt; Median: 16.088 </span></span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1"></a><span class="co">#&gt; Min: 15.015 </span></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1"></a><span class="co">#&gt; Max: 17.034 </span></span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1"></a><span class="co">#&gt; Summary for Expected Years of Schooling, male (years) :</span></span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1"></a><span class="co">#&gt; Mean: 15.48567 </span></span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1"></a><span class="co">#&gt; Median: 15.503 </span></span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1"></a><span class="co">#&gt; Min: 13.954 </span></span>
+<span id="cb4-59"><a href="#cb4-59" tabindex="-1"></a><span class="co">#&gt; Max: 16.811 </span></span>
+<span id="cb4-60"><a href="#cb4-60" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-61"><a href="#cb4-61" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-62"><a href="#cb4-62" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-63"><a href="#cb4-63" tabindex="-1"></a><span class="co">#&gt; Summary for GDI Group :</span></span>
+<span id="cb4-64"><a href="#cb4-64" tabindex="-1"></a><span class="co">#&gt; Mean: 1 </span></span>
+<span id="cb4-65"><a href="#cb4-65" tabindex="-1"></a><span class="co">#&gt; Median: 1 </span></span>
+<span id="cb4-66"><a href="#cb4-66" tabindex="-1"></a><span class="co">#&gt; Min: 1 </span></span>
+<span id="cb4-67"><a href="#cb4-67" tabindex="-1"></a><span class="co">#&gt; Max: 1 </span></span>
+<span id="cb4-68"><a href="#cb4-68" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb4-69"><a href="#cb4-69" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-70"><a href="#cb4-70" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-71"><a href="#cb4-71" tabindex="-1"></a><span class="co">#&gt; Summary for GII Rank :</span></span>
+<span id="cb4-72"><a href="#cb4-72" tabindex="-1"></a><span class="co">#&gt; Mean: 8 </span></span>
+<span id="cb4-73"><a href="#cb4-73" tabindex="-1"></a><span class="co">#&gt; Median: 8 </span></span>
+<span id="cb4-74"><a href="#cb4-74" tabindex="-1"></a><span class="co">#&gt; Min: 8 </span></span>
+<span id="cb4-75"><a href="#cb4-75" tabindex="-1"></a><span class="co">#&gt; Max: 8 </span></span>
+<span id="cb4-76"><a href="#cb4-76" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb4-77"><a href="#cb4-77" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-78"><a href="#cb4-78" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-79"><a href="#cb4-79" tabindex="-1"></a><span class="co">#&gt; Summary for Gross National Income Per Capita, female (2017 PPP$) :</span></span>
+<span id="cb4-80"><a href="#cb4-80" tabindex="-1"></a><span class="co">#&gt; Mean: 51973.3 </span></span>
+<span id="cb4-81"><a href="#cb4-81" tabindex="-1"></a><span class="co">#&gt; Median: 49528.43 </span></span>
+<span id="cb4-82"><a href="#cb4-82" tabindex="-1"></a><span class="co">#&gt; Min: 21415.89 </span></span>
+<span id="cb4-83"><a href="#cb4-83" tabindex="-1"></a><span class="co">#&gt; Max: 82518.17 </span></span>
+<span id="cb4-84"><a href="#cb4-84" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-85"><a href="#cb4-85" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-86"><a href="#cb4-86" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-87"><a href="#cb4-87" tabindex="-1"></a><span class="co">#&gt; Summary for Gross National Income Per Capita, male (2017 PPP$) :</span></span>
+<span id="cb4-88"><a href="#cb4-88" tabindex="-1"></a><span class="co">#&gt; Mean: 81172.36 </span></span>
+<span id="cb4-89"><a href="#cb4-89" tabindex="-1"></a><span class="co">#&gt; Median: 83888.57 </span></span>
+<span id="cb4-90"><a href="#cb4-90" tabindex="-1"></a><span class="co">#&gt; Min: 55014.28 </span></span>
+<span id="cb4-91"><a href="#cb4-91" tabindex="-1"></a><span class="co">#&gt; Max: 99844.24 </span></span>
+<span id="cb4-92"><a href="#cb4-92" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-93"><a href="#cb4-93" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-94"><a href="#cb4-94" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-95"><a href="#cb4-95" tabindex="-1"></a><span class="co">#&gt; Summary for Gross National Income Per Capita (2017 PPP$) :</span></span>
+<span id="cb4-96"><a href="#cb4-96" tabindex="-1"></a><span class="co">#&gt; Mean: 66906.99 </span></span>
+<span id="cb4-97"><a href="#cb4-97" tabindex="-1"></a><span class="co">#&gt; Median: 67635.46 </span></span>
+<span id="cb4-98"><a href="#cb4-98" tabindex="-1"></a><span class="co">#&gt; Min: 38458.13 </span></span>
+<span id="cb4-99"><a href="#cb4-99" tabindex="-1"></a><span class="co">#&gt; Max: 88761.15 </span></span>
+<span id="cb4-100"><a href="#cb4-100" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-101"><a href="#cb4-101" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-102"><a href="#cb4-102" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-103"><a href="#cb4-103" tabindex="-1"></a><span class="co">#&gt; Summary for HDI female :</span></span>
+<span id="cb4-104"><a href="#cb4-104" tabindex="-1"></a><span class="co">#&gt; Mean: 0.8690909 </span></span>
+<span id="cb4-105"><a href="#cb4-105" tabindex="-1"></a><span class="co">#&gt; Median: 0.882 </span></span>
+<span id="cb4-106"><a href="#cb4-106" tabindex="-1"></a><span class="co">#&gt; Min: 0.752 </span></span>
+<span id="cb4-107"><a href="#cb4-107" tabindex="-1"></a><span class="co">#&gt; Max: 0.945 </span></span>
+<span id="cb4-108"><a href="#cb4-108" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-109"><a href="#cb4-109" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-110"><a href="#cb4-110" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-111"><a href="#cb4-111" tabindex="-1"></a><span class="co">#&gt; Summary for HDI male :</span></span>
+<span id="cb4-112"><a href="#cb4-112" tabindex="-1"></a><span class="co">#&gt; Mean: 0.8935152 </span></span>
+<span id="cb4-113"><a href="#cb4-113" tabindex="-1"></a><span class="co">#&gt; Median: 0.904 </span></span>
+<span id="cb4-114"><a href="#cb4-114" tabindex="-1"></a><span class="co">#&gt; Min: 0.789 </span></span>
+<span id="cb4-115"><a href="#cb4-115" tabindex="-1"></a><span class="co">#&gt; Max: 0.954 </span></span>
+<span id="cb4-116"><a href="#cb4-116" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-117"><a href="#cb4-117" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-118"><a href="#cb4-118" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-119"><a href="#cb4-119" tabindex="-1"></a><span class="co">#&gt; Summary for HDI Rank :</span></span>
+<span id="cb4-120"><a href="#cb4-120" tabindex="-1"></a><span class="co">#&gt; Mean: 9 </span></span>
+<span id="cb4-121"><a href="#cb4-121" tabindex="-1"></a><span class="co">#&gt; Median: 9 </span></span>
+<span id="cb4-122"><a href="#cb4-122" tabindex="-1"></a><span class="co">#&gt; Min: 9 </span></span>
+<span id="cb4-123"><a href="#cb4-123" tabindex="-1"></a><span class="co">#&gt; Max: 9 </span></span>
+<span id="cb4-124"><a href="#cb4-124" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb4-125"><a href="#cb4-125" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-126"><a href="#cb4-126" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-127"><a href="#cb4-127" tabindex="-1"></a><span class="co">#&gt; Summary for Inequality in eduation :</span></span>
+<span id="cb4-128"><a href="#cb4-128" tabindex="-1"></a><span class="co">#&gt; Mean: 10.77323 </span></span>
+<span id="cb4-129"><a href="#cb4-129" tabindex="-1"></a><span class="co">#&gt; Median: 11 </span></span>
+<span id="cb4-130"><a href="#cb4-130" tabindex="-1"></a><span class="co">#&gt; Min: 9.406 </span></span>
+<span id="cb4-131"><a href="#cb4-131" tabindex="-1"></a><span class="co">#&gt; Max: 12.263 </span></span>
+<span id="cb4-132"><a href="#cb4-132" tabindex="-1"></a><span class="co">#&gt; Years of data: 13 </span></span>
+<span id="cb4-133"><a href="#cb4-133" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-134"><a href="#cb4-134" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-135"><a href="#cb4-135" tabindex="-1"></a><span class="co">#&gt; Summary for Inequality in income :</span></span>
+<span id="cb4-136"><a href="#cb4-136" tabindex="-1"></a><span class="co">#&gt; Mean: 25.76585 </span></span>
+<span id="cb4-137"><a href="#cb4-137" tabindex="-1"></a><span class="co">#&gt; Median: 25.935 </span></span>
+<span id="cb4-138"><a href="#cb4-138" tabindex="-1"></a><span class="co">#&gt; Min: 24.158 </span></span>
+<span id="cb4-139"><a href="#cb4-139" tabindex="-1"></a><span class="co">#&gt; Max: 25.935 </span></span>
+<span id="cb4-140"><a href="#cb4-140" tabindex="-1"></a><span class="co">#&gt; Years of data: 13 </span></span>
+<span id="cb4-141"><a href="#cb4-141" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-142"><a href="#cb4-142" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-143"><a href="#cb4-143" tabindex="-1"></a><span class="co">#&gt; Summary for Inequality in life expectancy :</span></span>
+<span id="cb4-144"><a href="#cb4-144" tabindex="-1"></a><span class="co">#&gt; Mean: 2.556462 </span></span>
+<span id="cb4-145"><a href="#cb4-145" tabindex="-1"></a><span class="co">#&gt; Median: 2.609 </span></span>
+<span id="cb4-146"><a href="#cb4-146" tabindex="-1"></a><span class="co">#&gt; Min: 2.261 </span></span>
+<span id="cb4-147"><a href="#cb4-147" tabindex="-1"></a><span class="co">#&gt; Max: 2.782 </span></span>
+<span id="cb4-148"><a href="#cb4-148" tabindex="-1"></a><span class="co">#&gt; Years of data: 13 </span></span>
+<span id="cb4-149"><a href="#cb4-149" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-150"><a href="#cb4-150" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-151"><a href="#cb4-151" tabindex="-1"></a><span class="co">#&gt; Summary for Life Expectancy at Birth (years) :</span></span>
+<span id="cb4-152"><a href="#cb4-152" tabindex="-1"></a><span class="co">#&gt; Mean: 80.06718 </span></span>
+<span id="cb4-153"><a href="#cb4-153" tabindex="-1"></a><span class="co">#&gt; Median: 80.71 </span></span>
+<span id="cb4-154"><a href="#cb4-154" tabindex="-1"></a><span class="co">#&gt; Min: 74.944 </span></span>
+<span id="cb4-155"><a href="#cb4-155" tabindex="-1"></a><span class="co">#&gt; Max: 84.133 </span></span>
+<span id="cb4-156"><a href="#cb4-156" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-157"><a href="#cb4-157" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-158"><a href="#cb4-158" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-159"><a href="#cb4-159" tabindex="-1"></a><span class="co">#&gt; Summary for Life Expectancy at Birth, female (years) :</span></span>
+<span id="cb4-160"><a href="#cb4-160" tabindex="-1"></a><span class="co">#&gt; Mean: 82.57364 </span></span>
+<span id="cb4-161"><a href="#cb4-161" tabindex="-1"></a><span class="co">#&gt; Median: 83.485 </span></span>
+<span id="cb4-162"><a href="#cb4-162" tabindex="-1"></a><span class="co">#&gt; Min: 77.566 </span></span>
+<span id="cb4-163"><a href="#cb4-163" tabindex="-1"></a><span class="co">#&gt; Max: 86.295 </span></span>
+<span id="cb4-164"><a href="#cb4-164" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-165"><a href="#cb4-165" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-166"><a href="#cb4-166" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-167"><a href="#cb4-167" tabindex="-1"></a><span class="co">#&gt; Summary for Life Expectancy at Birth, male (years) :</span></span>
+<span id="cb4-168"><a href="#cb4-168" tabindex="-1"></a><span class="co">#&gt; Mean: 77.57173 </span></span>
+<span id="cb4-169"><a href="#cb4-169" tabindex="-1"></a><span class="co">#&gt; Median: 77.894 </span></span>
+<span id="cb4-170"><a href="#cb4-170" tabindex="-1"></a><span class="co">#&gt; Min: 72.418 </span></span>
+<span id="cb4-171"><a href="#cb4-171" tabindex="-1"></a><span class="co">#&gt; Max: 81.981 </span></span>
+<span id="cb4-172"><a href="#cb4-172" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-173"><a href="#cb4-173" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-174"><a href="#cb4-174" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-175"><a href="#cb4-175" tabindex="-1"></a><span class="co">#&gt; Summary for Labour force participation rate, female (% ages 15 and older) :</span></span>
+<span id="cb4-176"><a href="#cb4-176" tabindex="-1"></a><span class="co">#&gt; Mean: 51.98485 </span></span>
+<span id="cb4-177"><a href="#cb4-177" tabindex="-1"></a><span class="co">#&gt; Median: 53.08 </span></span>
+<span id="cb4-178"><a href="#cb4-178" tabindex="-1"></a><span class="co">#&gt; Min: 37.88 </span></span>
+<span id="cb4-179"><a href="#cb4-179" tabindex="-1"></a><span class="co">#&gt; Max: 64.17 </span></span>
+<span id="cb4-180"><a href="#cb4-180" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-181"><a href="#cb4-181" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-182"><a href="#cb4-182" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-183"><a href="#cb4-183" tabindex="-1"></a><span class="co">#&gt; Summary for Labour force participation rate, male (% ages 15 and older) :</span></span>
+<span id="cb4-184"><a href="#cb4-184" tabindex="-1"></a><span class="co">#&gt; Mean: 73.62394 </span></span>
+<span id="cb4-185"><a href="#cb4-185" tabindex="-1"></a><span class="co">#&gt; Median: 75.92 </span></span>
+<span id="cb4-186"><a href="#cb4-186" tabindex="-1"></a><span class="co">#&gt; Min: 61.24 </span></span>
+<span id="cb4-187"><a href="#cb4-187" tabindex="-1"></a><span class="co">#&gt; Max: 77.81 </span></span>
+<span id="cb4-188"><a href="#cb4-188" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-189"><a href="#cb4-189" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-190"><a href="#cb4-190" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-191"><a href="#cb4-191" tabindex="-1"></a><span class="co">#&gt; Summary for Overall loss (%) :</span></span>
+<span id="cb4-192"><a href="#cb4-192" tabindex="-1"></a><span class="co">#&gt; Mean: 13.57615 </span></span>
+<span id="cb4-193"><a href="#cb4-193" tabindex="-1"></a><span class="co">#&gt; Median: 13.69 </span></span>
+<span id="cb4-194"><a href="#cb4-194" tabindex="-1"></a><span class="co">#&gt; Min: 13.057 </span></span>
+<span id="cb4-195"><a href="#cb4-195" tabindex="-1"></a><span class="co">#&gt; Max: 14.039 </span></span>
+<span id="cb4-196"><a href="#cb4-196" tabindex="-1"></a><span class="co">#&gt; Years of data: 13 </span></span>
+<span id="cb4-197"><a href="#cb4-197" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-198"><a href="#cb4-198" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-199"><a href="#cb4-199" tabindex="-1"></a><span class="co">#&gt; Summary for Material footprint per capita (tonnes) :</span></span>
+<span id="cb4-200"><a href="#cb4-200" tabindex="-1"></a><span class="co">#&gt; Mean: 40.41921 </span></span>
+<span id="cb4-201"><a href="#cb4-201" tabindex="-1"></a><span class="co">#&gt; Median: 38.761 </span></span>
+<span id="cb4-202"><a href="#cb4-202" tabindex="-1"></a><span class="co">#&gt; Min: 28.025 </span></span>
+<span id="cb4-203"><a href="#cb4-203" tabindex="-1"></a><span class="co">#&gt; Max: 78.236 </span></span>
+<span id="cb4-204"><a href="#cb4-204" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-205"><a href="#cb4-205" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-206"><a href="#cb4-206" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-207"><a href="#cb4-207" tabindex="-1"></a><span class="co">#&gt; Summary for Maternal Mortality Ratio (deaths per 100,000 live births) :</span></span>
+<span id="cb4-208"><a href="#cb4-208" tabindex="-1"></a><span class="co">#&gt; Mean: 11.33142 </span></span>
+<span id="cb4-209"><a href="#cb4-209" tabindex="-1"></a><span class="co">#&gt; Median: 11.726 </span></span>
+<span id="cb4-210"><a href="#cb4-210" tabindex="-1"></a><span class="co">#&gt; Min: 6.247 </span></span>
+<span id="cb4-211"><a href="#cb4-211" tabindex="-1"></a><span class="co">#&gt; Max: 17.043 </span></span>
+<span id="cb4-212"><a href="#cb4-212" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-213"><a href="#cb4-213" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-214"><a href="#cb4-214" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-215"><a href="#cb4-215" tabindex="-1"></a><span class="co">#&gt; Summary for Mean Years of Schooling (years) :</span></span>
+<span id="cb4-216"><a href="#cb4-216" tabindex="-1"></a><span class="co">#&gt; Mean: 9.976212 </span></span>
+<span id="cb4-217"><a href="#cb4-217" tabindex="-1"></a><span class="co">#&gt; Median: 10.538 </span></span>
+<span id="cb4-218"><a href="#cb4-218" tabindex="-1"></a><span class="co">#&gt; Min: 6.363 </span></span>
+<span id="cb4-219"><a href="#cb4-219" tabindex="-1"></a><span class="co">#&gt; Max: 11.925 </span></span>
+<span id="cb4-220"><a href="#cb4-220" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-221"><a href="#cb4-221" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-222"><a href="#cb4-222" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-223"><a href="#cb4-223" tabindex="-1"></a><span class="co">#&gt; Summary for Mean Years of Schooling, female (years) :</span></span>
+<span id="cb4-224"><a href="#cb4-224" tabindex="-1"></a><span class="co">#&gt; Mean: 9.512333 </span></span>
+<span id="cb4-225"><a href="#cb4-225" tabindex="-1"></a><span class="co">#&gt; Median: 10.085 </span></span>
+<span id="cb4-226"><a href="#cb4-226" tabindex="-1"></a><span class="co">#&gt; Min: 6.085 </span></span>
+<span id="cb4-227"><a href="#cb4-227" tabindex="-1"></a><span class="co">#&gt; Max: 11.627 </span></span>
+<span id="cb4-228"><a href="#cb4-228" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-229"><a href="#cb4-229" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-230"><a href="#cb4-230" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-231"><a href="#cb4-231" tabindex="-1"></a><span class="co">#&gt; Summary for Mean Years of Schooling, male (years) :</span></span>
+<span id="cb4-232"><a href="#cb4-232" tabindex="-1"></a><span class="co">#&gt; Mean: 10.46976 </span></span>
+<span id="cb4-233"><a href="#cb4-233" tabindex="-1"></a><span class="co">#&gt; Median: 10.992 </span></span>
+<span id="cb4-234"><a href="#cb4-234" tabindex="-1"></a><span class="co">#&gt; Min: 6.665 </span></span>
+<span id="cb4-235"><a href="#cb4-235" tabindex="-1"></a><span class="co">#&gt; Max: 12.255 </span></span>
+<span id="cb4-236"><a href="#cb4-236" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-237"><a href="#cb4-237" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-238"><a href="#cb4-238" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-239"><a href="#cb4-239" tabindex="-1"></a><span class="co">#&gt; Summary for Share of seats in parliament, female (% held by women) :</span></span>
+<span id="cb4-240"><a href="#cb4-240" tabindex="-1"></a><span class="co">#&gt; Mean: 16.38858 </span></span>
+<span id="cb4-241"><a href="#cb4-241" tabindex="-1"></a><span class="co">#&gt; Median: 21.176 </span></span>
+<span id="cb4-242"><a href="#cb4-242" tabindex="-1"></a><span class="co">#&gt; Min: 4.301 </span></span>
+<span id="cb4-243"><a href="#cb4-243" tabindex="-1"></a><span class="co">#&gt; Max: 29.808 </span></span>
+<span id="cb4-244"><a href="#cb4-244" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-245"><a href="#cb4-245" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-246"><a href="#cb4-246" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-247"><a href="#cb4-247" tabindex="-1"></a><span class="co">#&gt; Summary for Share of seats in parliament, male (% held by men) :</span></span>
+<span id="cb4-248"><a href="#cb4-248" tabindex="-1"></a><span class="co">#&gt; Mean: 83.61142 </span></span>
+<span id="cb4-249"><a href="#cb4-249" tabindex="-1"></a><span class="co">#&gt; Median: 78.824 </span></span>
+<span id="cb4-250"><a href="#cb4-250" tabindex="-1"></a><span class="co">#&gt; Min: 70.192 </span></span>
+<span id="cb4-251"><a href="#cb4-251" tabindex="-1"></a><span class="co">#&gt; Max: 95.699 </span></span>
+<span id="cb4-252"><a href="#cb4-252" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-253"><a href="#cb4-253" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-254"><a href="#cb4-254" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-255"><a href="#cb4-255" tabindex="-1"></a><span class="co">#&gt; Summary for Difference from HDI rank :</span></span>
+<span id="cb4-256"><a href="#cb4-256" tabindex="-1"></a><span class="co">#&gt; Mean: -38 </span></span>
+<span id="cb4-257"><a href="#cb4-257" tabindex="-1"></a><span class="co">#&gt; Median: -38 </span></span>
+<span id="cb4-258"><a href="#cb4-258" tabindex="-1"></a><span class="co">#&gt; Min: -38 </span></span>
+<span id="cb4-259"><a href="#cb4-259" tabindex="-1"></a><span class="co">#&gt; Max: -38 </span></span>
+<span id="cb4-260"><a href="#cb4-260" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb4-261"><a href="#cb4-261" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-262"><a href="#cb4-262" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-263"><a href="#cb4-263" tabindex="-1"></a><span class="co">#&gt; Summary for Population with at least some secondary education, female (% ages 25 and older) :</span></span>
+<span id="cb4-264"><a href="#cb4-264" tabindex="-1"></a><span class="co">#&gt; Mean: 64.94209 </span></span>
+<span id="cb4-265"><a href="#cb4-265" tabindex="-1"></a><span class="co">#&gt; Median: 68.028 </span></span>
+<span id="cb4-266"><a href="#cb4-266" tabindex="-1"></a><span class="co">#&gt; Min: 34.138 </span></span>
+<span id="cb4-267"><a href="#cb4-267" tabindex="-1"></a><span class="co">#&gt; Max: 80.464 </span></span>
+<span id="cb4-268"><a href="#cb4-268" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-269"><a href="#cb4-269" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-270"><a href="#cb4-270" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-271"><a href="#cb4-271" tabindex="-1"></a><span class="co">#&gt; Summary for Population with at least some secondary education, male (% ages 25 and older) :</span></span>
+<span id="cb4-272"><a href="#cb4-272" tabindex="-1"></a><span class="co">#&gt; Mean: 72.64788 </span></span>
+<span id="cb4-273"><a href="#cb4-273" tabindex="-1"></a><span class="co">#&gt; Median: 76.003 </span></span>
+<span id="cb4-274"><a href="#cb4-274" tabindex="-1"></a><span class="co">#&gt; Min: 37.976 </span></span>
+<span id="cb4-275"><a href="#cb4-275" tabindex="-1"></a><span class="co">#&gt; Max: 85.932 </span></span>
+<span id="cb4-276"><a href="#cb4-276" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb4-277"><a href="#cb4-277" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb4-278"><a href="#cb4-278" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-279"><a href="#cb4-279" tabindex="-1"></a><span class="co">#&gt; Data Completeness (percentage of non-NA values):</span></span>
+<span id="cb4-280"><a href="#cb4-280" tabindex="-1"></a><span class="co">#&gt;   country_code   country_name   indicator_id indicator_name       index_id </span></span>
+<span id="cb4-281"><a href="#cb4-281" tabindex="-1"></a><span class="co">#&gt;            100            100            100            100            100 </span></span>
+<span id="cb4-282"><a href="#cb4-282" tabindex="-1"></a><span class="co">#&gt;     index_name          value           year </span></span>
+<span id="cb4-283"><a href="#cb4-283" tabindex="-1"></a><span class="co">#&gt;            100            100            100</span></span></code></pre></div>
+</div>
+<div id="nigeria-1" class="section level3">
+<h3>Nigeria</h3>
+<p>Again, the detailed output is provided below and a researcher can
+pick and choose which to focus on.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">summary</span>(HDIdata_nga)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; HDIdata Summary</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; Observations: 777 </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; Indicators: 44 </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; Years: 1990 2022 </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; Summary for Adolescent Birth Rate (births per 1,000 women ages 15-19) :</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; Mean: 124.6288 </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; Median: 128.112 </span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; Min: 99.56 </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; Max: 140.866 </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; Summary for Assets (%) :</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; Mean: 4.945 </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; Median: 4.945 </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; Min: 4.945 </span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; Max: 4.945 </span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; Summary for Child mortality (%) :</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; Mean: 19.473 </span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; Median: 19.473 </span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt; Min: 19.473 </span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; Max: 19.473 </span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co">#&gt; Summary for Carbon dioxide emissions per capita (production) (tonnes) :</span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co">#&gt; Mean: 0.6472121 </span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co">#&gt; Median: 0.641 </span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co">#&gt; Min: 0.408 </span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co">#&gt; Max: 0.882 </span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="co">#&gt; Summary for Coefficient of human inequality :</span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="co">#&gt; Mean: 33.94983 </span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="co">#&gt; Median: 33.4935 </span></span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="co">#&gt; Min: 32.021 </span></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a><span class="co">#&gt; Max: 35.981 </span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co">#&gt; Years of data: 12 </span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a><span class="co">#&gt; Summary for Cooking fuel (%) :</span></span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a><span class="co">#&gt; Mean: 10.114 </span></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="co">#&gt; Median: 10.114 </span></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="co">#&gt; Min: 10.114 </span></span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a><span class="co">#&gt; Max: 10.114 </span></span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a><span class="co">#&gt; Summary for Difference from HDI value (%) :</span></span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a><span class="co">#&gt; Mean: 1.78355 </span></span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a><span class="co">#&gt; Median: 1.813 </span></span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a><span class="co">#&gt; Min: 1.44 </span></span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a><span class="co">#&gt; Max: 2.048 </span></span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-63"><a href="#cb5-63" tabindex="-1"></a><span class="co">#&gt; Summary for Drinking water (%) :</span></span>
+<span id="cb5-64"><a href="#cb5-64" tabindex="-1"></a><span class="co">#&gt; Mean: 5.784 </span></span>
+<span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a><span class="co">#&gt; Median: 5.784 </span></span>
+<span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a><span class="co">#&gt; Min: 5.784 </span></span>
+<span id="cb5-67"><a href="#cb5-67" tabindex="-1"></a><span class="co">#&gt; Max: 5.784 </span></span>
+<span id="cb5-68"><a href="#cb5-68" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-69"><a href="#cb5-69" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-70"><a href="#cb5-70" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-71"><a href="#cb5-71" tabindex="-1"></a><span class="co">#&gt; Summary for Electricity (%) :</span></span>
+<span id="cb5-72"><a href="#cb5-72" tabindex="-1"></a><span class="co">#&gt; Mean: 7.9 </span></span>
+<span id="cb5-73"><a href="#cb5-73" tabindex="-1"></a><span class="co">#&gt; Median: 7.9 </span></span>
+<span id="cb5-74"><a href="#cb5-74" tabindex="-1"></a><span class="co">#&gt; Min: 7.9 </span></span>
+<span id="cb5-75"><a href="#cb5-75" tabindex="-1"></a><span class="co">#&gt; Max: 7.9 </span></span>
+<span id="cb5-76"><a href="#cb5-76" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-77"><a href="#cb5-77" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-78"><a href="#cb5-78" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-79"><a href="#cb5-79" tabindex="-1"></a><span class="co">#&gt; Summary for Expected Years of Schooling (years) :</span></span>
+<span id="cb5-80"><a href="#cb5-80" tabindex="-1"></a><span class="co">#&gt; Mean: 8.330939 </span></span>
+<span id="cb5-81"><a href="#cb5-81" tabindex="-1"></a><span class="co">#&gt; Median: 8.471 </span></span>
+<span id="cb5-82"><a href="#cb5-82" tabindex="-1"></a><span class="co">#&gt; Min: 5.835 </span></span>
+<span id="cb5-83"><a href="#cb5-83" tabindex="-1"></a><span class="co">#&gt; Max: 10.514 </span></span>
+<span id="cb5-84"><a href="#cb5-84" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-85"><a href="#cb5-85" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-86"><a href="#cb5-86" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-87"><a href="#cb5-87" tabindex="-1"></a><span class="co">#&gt; Summary for Expected Years of Schooling, female (years) :</span></span>
+<span id="cb5-88"><a href="#cb5-88" tabindex="-1"></a><span class="co">#&gt; Mean: 7.691939 </span></span>
+<span id="cb5-89"><a href="#cb5-89" tabindex="-1"></a><span class="co">#&gt; Median: 7.86 </span></span>
+<span id="cb5-90"><a href="#cb5-90" tabindex="-1"></a><span class="co">#&gt; Min: 5.231 </span></span>
+<span id="cb5-91"><a href="#cb5-91" tabindex="-1"></a><span class="co">#&gt; Max: 10.204 </span></span>
+<span id="cb5-92"><a href="#cb5-92" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-93"><a href="#cb5-93" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-94"><a href="#cb5-94" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-95"><a href="#cb5-95" tabindex="-1"></a><span class="co">#&gt; Summary for Expected Years of Schooling, male (years) :</span></span>
+<span id="cb5-96"><a href="#cb5-96" tabindex="-1"></a><span class="co">#&gt; Mean: 8.982939 </span></span>
+<span id="cb5-97"><a href="#cb5-97" tabindex="-1"></a><span class="co">#&gt; Median: 9.111 </span></span>
+<span id="cb5-98"><a href="#cb5-98" tabindex="-1"></a><span class="co">#&gt; Min: 6.427 </span></span>
+<span id="cb5-99"><a href="#cb5-99" tabindex="-1"></a><span class="co">#&gt; Max: 10.837 </span></span>
+<span id="cb5-100"><a href="#cb5-100" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-101"><a href="#cb5-101" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-102"><a href="#cb5-102" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-103"><a href="#cb5-103" tabindex="-1"></a><span class="co">#&gt; Summary for GDI Group :</span></span>
+<span id="cb5-104"><a href="#cb5-104" tabindex="-1"></a><span class="co">#&gt; Mean: 5 </span></span>
+<span id="cb5-105"><a href="#cb5-105" tabindex="-1"></a><span class="co">#&gt; Median: 5 </span></span>
+<span id="cb5-106"><a href="#cb5-106" tabindex="-1"></a><span class="co">#&gt; Min: 5 </span></span>
+<span id="cb5-107"><a href="#cb5-107" tabindex="-1"></a><span class="co">#&gt; Max: 5 </span></span>
+<span id="cb5-108"><a href="#cb5-108" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-109"><a href="#cb5-109" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-110"><a href="#cb5-110" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-111"><a href="#cb5-111" tabindex="-1"></a><span class="co">#&gt; Summary for GII Rank :</span></span>
+<span id="cb5-112"><a href="#cb5-112" tabindex="-1"></a><span class="co">#&gt; Mean: 165 </span></span>
+<span id="cb5-113"><a href="#cb5-113" tabindex="-1"></a><span class="co">#&gt; Median: 165 </span></span>
+<span id="cb5-114"><a href="#cb5-114" tabindex="-1"></a><span class="co">#&gt; Min: 165 </span></span>
+<span id="cb5-115"><a href="#cb5-115" tabindex="-1"></a><span class="co">#&gt; Max: 165 </span></span>
+<span id="cb5-116"><a href="#cb5-116" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-117"><a href="#cb5-117" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-118"><a href="#cb5-118" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-119"><a href="#cb5-119" tabindex="-1"></a><span class="co">#&gt; Summary for Gross National Income Per Capita, female (2017 PPP$) :</span></span>
+<span id="cb5-120"><a href="#cb5-120" tabindex="-1"></a><span class="co">#&gt; Mean: 2951.464 </span></span>
+<span id="cb5-121"><a href="#cb5-121" tabindex="-1"></a><span class="co">#&gt; Median: 2983.756 </span></span>
+<span id="cb5-122"><a href="#cb5-122" tabindex="-1"></a><span class="co">#&gt; Min: 1668.01 </span></span>
+<span id="cb5-123"><a href="#cb5-123" tabindex="-1"></a><span class="co">#&gt; Max: 4523.682 </span></span>
+<span id="cb5-124"><a href="#cb5-124" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-125"><a href="#cb5-125" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-126"><a href="#cb5-126" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-127"><a href="#cb5-127" tabindex="-1"></a><span class="co">#&gt; Summary for Gross National Income Per Capita, male (2017 PPP$) :</span></span>
+<span id="cb5-128"><a href="#cb5-128" tabindex="-1"></a><span class="co">#&gt; Mean: 4767.502 </span></span>
+<span id="cb5-129"><a href="#cb5-129" tabindex="-1"></a><span class="co">#&gt; Median: 4924.637 </span></span>
+<span id="cb5-130"><a href="#cb5-130" tabindex="-1"></a><span class="co">#&gt; Min: 3425.58 </span></span>
+<span id="cb5-131"><a href="#cb5-131" tabindex="-1"></a><span class="co">#&gt; Max: 6450.983 </span></span>
+<span id="cb5-132"><a href="#cb5-132" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-133"><a href="#cb5-133" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-134"><a href="#cb5-134" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-135"><a href="#cb5-135" tabindex="-1"></a><span class="co">#&gt; Summary for Gross National Income Per Capita (2017 PPP$) :</span></span>
+<span id="cb5-136"><a href="#cb5-136" tabindex="-1"></a><span class="co">#&gt; Mean: 3865.58 </span></span>
+<span id="cb5-137"><a href="#cb5-137" tabindex="-1"></a><span class="co">#&gt; Median: 3960.198 </span></span>
+<span id="cb5-138"><a href="#cb5-138" tabindex="-1"></a><span class="co">#&gt; Min: 2643.707 </span></span>
+<span id="cb5-139"><a href="#cb5-139" tabindex="-1"></a><span class="co">#&gt; Max: 5273.015 </span></span>
+<span id="cb5-140"><a href="#cb5-140" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-141"><a href="#cb5-141" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-142"><a href="#cb5-142" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-143"><a href="#cb5-143" tabindex="-1"></a><span class="co">#&gt; Summary for HDI female :</span></span>
+<span id="cb5-144"><a href="#cb5-144" tabindex="-1"></a><span class="co">#&gt; Mean: 0.4627 </span></span>
+<span id="cb5-145"><a href="#cb5-145" tabindex="-1"></a><span class="co">#&gt; Median: 0.462 </span></span>
+<span id="cb5-146"><a href="#cb5-146" tabindex="-1"></a><span class="co">#&gt; Min: 0.401 </span></span>
+<span id="cb5-147"><a href="#cb5-147" tabindex="-1"></a><span class="co">#&gt; Max: 0.515 </span></span>
+<span id="cb5-148"><a href="#cb5-148" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-149"><a href="#cb5-149" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-150"><a href="#cb5-150" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-151"><a href="#cb5-151" tabindex="-1"></a><span class="co">#&gt; Summary for HDI male :</span></span>
+<span id="cb5-152"><a href="#cb5-152" tabindex="-1"></a><span class="co">#&gt; Mean: 0.54265 </span></span>
+<span id="cb5-153"><a href="#cb5-153" tabindex="-1"></a><span class="co">#&gt; Median: 0.539 </span></span>
+<span id="cb5-154"><a href="#cb5-154" tabindex="-1"></a><span class="co">#&gt; Min: 0.493 </span></span>
+<span id="cb5-155"><a href="#cb5-155" tabindex="-1"></a><span class="co">#&gt; Max: 0.585 </span></span>
+<span id="cb5-156"><a href="#cb5-156" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-157"><a href="#cb5-157" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-158"><a href="#cb5-158" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-159"><a href="#cb5-159" tabindex="-1"></a><span class="co">#&gt; Summary for HDI Rank :</span></span>
+<span id="cb5-160"><a href="#cb5-160" tabindex="-1"></a><span class="co">#&gt; Mean: 161 </span></span>
+<span id="cb5-161"><a href="#cb5-161" tabindex="-1"></a><span class="co">#&gt; Median: 161 </span></span>
+<span id="cb5-162"><a href="#cb5-162" tabindex="-1"></a><span class="co">#&gt; Min: 161 </span></span>
+<span id="cb5-163"><a href="#cb5-163" tabindex="-1"></a><span class="co">#&gt; Max: 161 </span></span>
+<span id="cb5-164"><a href="#cb5-164" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-165"><a href="#cb5-165" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-166"><a href="#cb5-166" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-167"><a href="#cb5-167" tabindex="-1"></a><span class="co">#&gt; Summary for Housing (%) :</span></span>
+<span id="cb5-168"><a href="#cb5-168" tabindex="-1"></a><span class="co">#&gt; Mean: 7.849 </span></span>
+<span id="cb5-169"><a href="#cb5-169" tabindex="-1"></a><span class="co">#&gt; Median: 7.849 </span></span>
+<span id="cb5-170"><a href="#cb5-170" tabindex="-1"></a><span class="co">#&gt; Min: 7.849 </span></span>
+<span id="cb5-171"><a href="#cb5-171" tabindex="-1"></a><span class="co">#&gt; Max: 7.849 </span></span>
+<span id="cb5-172"><a href="#cb5-172" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-173"><a href="#cb5-173" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-174"><a href="#cb5-174" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-175"><a href="#cb5-175" tabindex="-1"></a><span class="co">#&gt; Summary for Inequality in eduation :</span></span>
+<span id="cb5-176"><a href="#cb5-176" tabindex="-1"></a><span class="co">#&gt; Mean: 41.43977 </span></span>
+<span id="cb5-177"><a href="#cb5-177" tabindex="-1"></a><span class="co">#&gt; Median: 40.415 </span></span>
+<span id="cb5-178"><a href="#cb5-178" tabindex="-1"></a><span class="co">#&gt; Min: 37.831 </span></span>
+<span id="cb5-179"><a href="#cb5-179" tabindex="-1"></a><span class="co">#&gt; Max: 45.243 </span></span>
+<span id="cb5-180"><a href="#cb5-180" tabindex="-1"></a><span class="co">#&gt; Years of data: 13 </span></span>
+<span id="cb5-181"><a href="#cb5-181" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-182"><a href="#cb5-182" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-183"><a href="#cb5-183" tabindex="-1"></a><span class="co">#&gt; Summary for Inequality in income :</span></span>
+<span id="cb5-184"><a href="#cb5-184" tabindex="-1"></a><span class="co">#&gt; Mean: 18.927 </span></span>
+<span id="cb5-185"><a href="#cb5-185" tabindex="-1"></a><span class="co">#&gt; Median: 19.078 </span></span>
+<span id="cb5-186"><a href="#cb5-186" tabindex="-1"></a><span class="co">#&gt; Min: 18.625 </span></span>
+<span id="cb5-187"><a href="#cb5-187" tabindex="-1"></a><span class="co">#&gt; Max: 19.078 </span></span>
+<span id="cb5-188"><a href="#cb5-188" tabindex="-1"></a><span class="co">#&gt; Years of data: 12 </span></span>
+<span id="cb5-189"><a href="#cb5-189" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-190"><a href="#cb5-190" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-191"><a href="#cb5-191" tabindex="-1"></a><span class="co">#&gt; Summary for Inequality in life expectancy :</span></span>
+<span id="cb5-192"><a href="#cb5-192" tabindex="-1"></a><span class="co">#&gt; Mean: 41.97038 </span></span>
+<span id="cb5-193"><a href="#cb5-193" tabindex="-1"></a><span class="co">#&gt; Median: 42.286 </span></span>
+<span id="cb5-194"><a href="#cb5-194" tabindex="-1"></a><span class="co">#&gt; Min: 39.606 </span></span>
+<span id="cb5-195"><a href="#cb5-195" tabindex="-1"></a><span class="co">#&gt; Max: 44.023 </span></span>
+<span id="cb5-196"><a href="#cb5-196" tabindex="-1"></a><span class="co">#&gt; Years of data: 13 </span></span>
+<span id="cb5-197"><a href="#cb5-197" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-198"><a href="#cb5-198" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-199"><a href="#cb5-199" tabindex="-1"></a><span class="co">#&gt; Summary for Life Expectancy at Birth (years) :</span></span>
+<span id="cb5-200"><a href="#cb5-200" tabindex="-1"></a><span class="co">#&gt; Mean: 49.28133 </span></span>
+<span id="cb5-201"><a href="#cb5-201" tabindex="-1"></a><span class="co">#&gt; Median: 49.73 </span></span>
+<span id="cb5-202"><a href="#cb5-202" tabindex="-1"></a><span class="co">#&gt; Min: 45.487 </span></span>
+<span id="cb5-203"><a href="#cb5-203" tabindex="-1"></a><span class="co">#&gt; Max: 53.633 </span></span>
+<span id="cb5-204"><a href="#cb5-204" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-205"><a href="#cb5-205" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-206"><a href="#cb5-206" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-207"><a href="#cb5-207" tabindex="-1"></a><span class="co">#&gt; Summary for Life Expectancy at Birth, female (years) :</span></span>
+<span id="cb5-208"><a href="#cb5-208" tabindex="-1"></a><span class="co">#&gt; Mean: 50.14736 </span></span>
+<span id="cb5-209"><a href="#cb5-209" tabindex="-1"></a><span class="co">#&gt; Median: 50.575 </span></span>
+<span id="cb5-210"><a href="#cb5-210" tabindex="-1"></a><span class="co">#&gt; Min: 47.026 </span></span>
+<span id="cb5-211"><a href="#cb5-211" tabindex="-1"></a><span class="co">#&gt; Max: 53.968 </span></span>
+<span id="cb5-212"><a href="#cb5-212" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-213"><a href="#cb5-213" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-214"><a href="#cb5-214" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-215"><a href="#cb5-215" tabindex="-1"></a><span class="co">#&gt; Summary for Life Expectancy at Birth, male (years) :</span></span>
+<span id="cb5-216"><a href="#cb5-216" tabindex="-1"></a><span class="co">#&gt; Mean: 48.44385 </span></span>
+<span id="cb5-217"><a href="#cb5-217" tabindex="-1"></a><span class="co">#&gt; Median: 48.901 </span></span>
+<span id="cb5-218"><a href="#cb5-218" tabindex="-1"></a><span class="co">#&gt; Min: 44.004 </span></span>
+<span id="cb5-219"><a href="#cb5-219" tabindex="-1"></a><span class="co">#&gt; Max: 53.295 </span></span>
+<span id="cb5-220"><a href="#cb5-220" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-221"><a href="#cb5-221" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-222"><a href="#cb5-222" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-223"><a href="#cb5-223" tabindex="-1"></a><span class="co">#&gt; Summary for Labour force participation rate, female (% ages 15 and older) :</span></span>
+<span id="cb5-224"><a href="#cb5-224" tabindex="-1"></a><span class="co">#&gt; Mean: 52.58485 </span></span>
+<span id="cb5-225"><a href="#cb5-225" tabindex="-1"></a><span class="co">#&gt; Median: 53.19 </span></span>
+<span id="cb5-226"><a href="#cb5-226" tabindex="-1"></a><span class="co">#&gt; Min: 39.42 </span></span>
+<span id="cb5-227"><a href="#cb5-227" tabindex="-1"></a><span class="co">#&gt; Max: 77.04 </span></span>
+<span id="cb5-228"><a href="#cb5-228" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-229"><a href="#cb5-229" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-230"><a href="#cb5-230" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-231"><a href="#cb5-231" tabindex="-1"></a><span class="co">#&gt; Summary for Labour force participation rate, male (% ages 15 and older) :</span></span>
+<span id="cb5-232"><a href="#cb5-232" tabindex="-1"></a><span class="co">#&gt; Mean: 69.64455 </span></span>
+<span id="cb5-233"><a href="#cb5-233" tabindex="-1"></a><span class="co">#&gt; Median: 71.2 </span></span>
+<span id="cb5-234"><a href="#cb5-234" tabindex="-1"></a><span class="co">#&gt; Min: 63.45 </span></span>
+<span id="cb5-235"><a href="#cb5-235" tabindex="-1"></a><span class="co">#&gt; Max: 85.66 </span></span>
+<span id="cb5-236"><a href="#cb5-236" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-237"><a href="#cb5-237" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-238"><a href="#cb5-238" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-239"><a href="#cb5-239" tabindex="-1"></a><span class="co">#&gt; Summary for Overall loss (%) :</span></span>
+<span id="cb5-240"><a href="#cb5-240" tabindex="-1"></a><span class="co">#&gt; Mean: 34.72692 </span></span>
+<span id="cb5-241"><a href="#cb5-241" tabindex="-1"></a><span class="co">#&gt; Median: 34.209 </span></span>
+<span id="cb5-242"><a href="#cb5-242" tabindex="-1"></a><span class="co">#&gt; Min: 32.657 </span></span>
+<span id="cb5-243"><a href="#cb5-243" tabindex="-1"></a><span class="co">#&gt; Max: 37.045 </span></span>
+<span id="cb5-244"><a href="#cb5-244" tabindex="-1"></a><span class="co">#&gt; Years of data: 12 </span></span>
+<span id="cb5-245"><a href="#cb5-245" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-246"><a href="#cb5-246" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-247"><a href="#cb5-247" tabindex="-1"></a><span class="co">#&gt; Summary for Material footprint per capita (tonnes) :</span></span>
+<span id="cb5-248"><a href="#cb5-248" tabindex="-1"></a><span class="co">#&gt; Mean: 3.554758 </span></span>
+<span id="cb5-249"><a href="#cb5-249" tabindex="-1"></a><span class="co">#&gt; Median: 3.474 </span></span>
+<span id="cb5-250"><a href="#cb5-250" tabindex="-1"></a><span class="co">#&gt; Min: 2.608 </span></span>
+<span id="cb5-251"><a href="#cb5-251" tabindex="-1"></a><span class="co">#&gt; Max: 4.476 </span></span>
+<span id="cb5-252"><a href="#cb5-252" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-253"><a href="#cb5-253" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-254"><a href="#cb5-254" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-255"><a href="#cb5-255" tabindex="-1"></a><span class="co">#&gt; Summary for Maternal Mortality Ratio (deaths per 100,000 live births) :</span></span>
+<span id="cb5-256"><a href="#cb5-256" tabindex="-1"></a><span class="co">#&gt; Mean: 1128.891 </span></span>
+<span id="cb5-257"><a href="#cb5-257" tabindex="-1"></a><span class="co">#&gt; Median: 1122.671 </span></span>
+<span id="cb5-258"><a href="#cb5-258" tabindex="-1"></a><span class="co">#&gt; Min: 1047.235 </span></span>
+<span id="cb5-259"><a href="#cb5-259" tabindex="-1"></a><span class="co">#&gt; Max: 1223.375 </span></span>
+<span id="cb5-260"><a href="#cb5-260" tabindex="-1"></a><span class="co">#&gt; Years of data: 33 </span></span>
+<span id="cb5-261"><a href="#cb5-261" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-262"><a href="#cb5-262" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-263"><a href="#cb5-263" tabindex="-1"></a><span class="co">#&gt; Summary for MPI Value (Range: 0 to 1) :</span></span>
+<span id="cb5-264"><a href="#cb5-264" tabindex="-1"></a><span class="co">#&gt; Mean: 0.175 </span></span>
+<span id="cb5-265"><a href="#cb5-265" tabindex="-1"></a><span class="co">#&gt; Median: 0.175 </span></span>
+<span id="cb5-266"><a href="#cb5-266" tabindex="-1"></a><span class="co">#&gt; Min: 0.175 </span></span>
+<span id="cb5-267"><a href="#cb5-267" tabindex="-1"></a><span class="co">#&gt; Max: 0.175 </span></span>
+<span id="cb5-268"><a href="#cb5-268" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-269"><a href="#cb5-269" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-270"><a href="#cb5-270" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-271"><a href="#cb5-271" tabindex="-1"></a><span class="co">#&gt; Summary for Mean Years of Schooling (years) :</span></span>
+<span id="cb5-272"><a href="#cb5-272" tabindex="-1"></a><span class="co">#&gt; Mean: 6.22105 </span></span>
+<span id="cb5-273"><a href="#cb5-273" tabindex="-1"></a><span class="co">#&gt; Median: 5.929 </span></span>
+<span id="cb5-274"><a href="#cb5-274" tabindex="-1"></a><span class="co">#&gt; Min: 4.725 </span></span>
+<span id="cb5-275"><a href="#cb5-275" tabindex="-1"></a><span class="co">#&gt; Max: 7.586 </span></span>
+<span id="cb5-276"><a href="#cb5-276" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-277"><a href="#cb5-277" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-278"><a href="#cb5-278" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-279"><a href="#cb5-279" tabindex="-1"></a><span class="co">#&gt; Summary for Mean Years of Schooling, female (years) :</span></span>
+<span id="cb5-280"><a href="#cb5-280" tabindex="-1"></a><span class="co">#&gt; Mean: 5.05385 </span></span>
+<span id="cb5-281"><a href="#cb5-281" tabindex="-1"></a><span class="co">#&gt; Median: 4.8385 </span></span>
+<span id="cb5-282"><a href="#cb5-282" tabindex="-1"></a><span class="co">#&gt; Min: 3.459 </span></span>
+<span id="cb5-283"><a href="#cb5-283" tabindex="-1"></a><span class="co">#&gt; Max: 6.556 </span></span>
+<span id="cb5-284"><a href="#cb5-284" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-285"><a href="#cb5-285" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-286"><a href="#cb5-286" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-287"><a href="#cb5-287" tabindex="-1"></a><span class="co">#&gt; Summary for Mean Years of Schooling, male (years) :</span></span>
+<span id="cb5-288"><a href="#cb5-288" tabindex="-1"></a><span class="co">#&gt; Mean: 7.4498 </span></span>
+<span id="cb5-289"><a href="#cb5-289" tabindex="-1"></a><span class="co">#&gt; Median: 7.053 </span></span>
+<span id="cb5-290"><a href="#cb5-290" tabindex="-1"></a><span class="co">#&gt; Min: 6.025 </span></span>
+<span id="cb5-291"><a href="#cb5-291" tabindex="-1"></a><span class="co">#&gt; Max: 8.738 </span></span>
+<span id="cb5-292"><a href="#cb5-292" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-293"><a href="#cb5-293" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-294"><a href="#cb5-294" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-295"><a href="#cb5-295" tabindex="-1"></a><span class="co">#&gt; Summary for Share of seats in parliament, female (% held by women) :</span></span>
+<span id="cb5-296"><a href="#cb5-296" tabindex="-1"></a><span class="co">#&gt; Mean: 5.476261 </span></span>
+<span id="cb5-297"><a href="#cb5-297" tabindex="-1"></a><span class="co">#&gt; Median: 5.769 </span></span>
+<span id="cb5-298"><a href="#cb5-298" tabindex="-1"></a><span class="co">#&gt; Min: 3.268 </span></span>
+<span id="cb5-299"><a href="#cb5-299" tabindex="-1"></a><span class="co">#&gt; Max: 7.281 </span></span>
+<span id="cb5-300"><a href="#cb5-300" tabindex="-1"></a><span class="co">#&gt; Years of data: 23 </span></span>
+<span id="cb5-301"><a href="#cb5-301" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-302"><a href="#cb5-302" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-303"><a href="#cb5-303" tabindex="-1"></a><span class="co">#&gt; Summary for Share of seats in parliament, male (% held by men) :</span></span>
+<span id="cb5-304"><a href="#cb5-304" tabindex="-1"></a><span class="co">#&gt; Mean: 94.52374 </span></span>
+<span id="cb5-305"><a href="#cb5-305" tabindex="-1"></a><span class="co">#&gt; Median: 94.231 </span></span>
+<span id="cb5-306"><a href="#cb5-306" tabindex="-1"></a><span class="co">#&gt; Min: 92.719 </span></span>
+<span id="cb5-307"><a href="#cb5-307" tabindex="-1"></a><span class="co">#&gt; Max: 96.732 </span></span>
+<span id="cb5-308"><a href="#cb5-308" tabindex="-1"></a><span class="co">#&gt; Years of data: 23 </span></span>
+<span id="cb5-309"><a href="#cb5-309" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-310"><a href="#cb5-310" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-311"><a href="#cb5-311" tabindex="-1"></a><span class="co">#&gt; Summary for Difference from HDI rank :</span></span>
+<span id="cb5-312"><a href="#cb5-312" tabindex="-1"></a><span class="co">#&gt; Mean: -1 </span></span>
+<span id="cb5-313"><a href="#cb5-313" tabindex="-1"></a><span class="co">#&gt; Median: -1 </span></span>
+<span id="cb5-314"><a href="#cb5-314" tabindex="-1"></a><span class="co">#&gt; Min: -1 </span></span>
+<span id="cb5-315"><a href="#cb5-315" tabindex="-1"></a><span class="co">#&gt; Max: -1 </span></span>
+<span id="cb5-316"><a href="#cb5-316" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-317"><a href="#cb5-317" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-318"><a href="#cb5-318" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-319"><a href="#cb5-319" tabindex="-1"></a><span class="co">#&gt; Summary for Sanitation (%) :</span></span>
+<span id="cb5-320"><a href="#cb5-320" tabindex="-1"></a><span class="co">#&gt; Mean: 8.405 </span></span>
+<span id="cb5-321"><a href="#cb5-321" tabindex="-1"></a><span class="co">#&gt; Median: 8.405 </span></span>
+<span id="cb5-322"><a href="#cb5-322" tabindex="-1"></a><span class="co">#&gt; Min: 8.405 </span></span>
+<span id="cb5-323"><a href="#cb5-323" tabindex="-1"></a><span class="co">#&gt; Max: 8.405 </span></span>
+<span id="cb5-324"><a href="#cb5-324" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-325"><a href="#cb5-325" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-326"><a href="#cb5-326" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-327"><a href="#cb5-327" tabindex="-1"></a><span class="co">#&gt; Summary for School attendance (%) :</span></span>
+<span id="cb5-328"><a href="#cb5-328" tabindex="-1"></a><span class="co">#&gt; Mean: 19.654 </span></span>
+<span id="cb5-329"><a href="#cb5-329" tabindex="-1"></a><span class="co">#&gt; Median: 19.654 </span></span>
+<span id="cb5-330"><a href="#cb5-330" tabindex="-1"></a><span class="co">#&gt; Min: 19.654 </span></span>
+<span id="cb5-331"><a href="#cb5-331" tabindex="-1"></a><span class="co">#&gt; Max: 19.654 </span></span>
+<span id="cb5-332"><a href="#cb5-332" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-333"><a href="#cb5-333" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-334"><a href="#cb5-334" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-335"><a href="#cb5-335" tabindex="-1"></a><span class="co">#&gt; Summary for Population with at least some secondary education, female (% ages 25 and older) :</span></span>
+<span id="cb5-336"><a href="#cb5-336" tabindex="-1"></a><span class="co">#&gt; Mean: 39.02535 </span></span>
+<span id="cb5-337"><a href="#cb5-337" tabindex="-1"></a><span class="co">#&gt; Median: 38.6605 </span></span>
+<span id="cb5-338"><a href="#cb5-338" tabindex="-1"></a><span class="co">#&gt; Min: 34.904 </span></span>
+<span id="cb5-339"><a href="#cb5-339" tabindex="-1"></a><span class="co">#&gt; Max: 43.298 </span></span>
+<span id="cb5-340"><a href="#cb5-340" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-341"><a href="#cb5-341" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-342"><a href="#cb5-342" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-343"><a href="#cb5-343" tabindex="-1"></a><span class="co">#&gt; Summary for Population with at least some secondary education, male (% ages 25 and older) :</span></span>
+<span id="cb5-344"><a href="#cb5-344" tabindex="-1"></a><span class="co">#&gt; Mean: 55.2764 </span></span>
+<span id="cb5-345"><a href="#cb5-345" tabindex="-1"></a><span class="co">#&gt; Median: 55.685 </span></span>
+<span id="cb5-346"><a href="#cb5-346" tabindex="-1"></a><span class="co">#&gt; Min: 50.901 </span></span>
+<span id="cb5-347"><a href="#cb5-347" tabindex="-1"></a><span class="co">#&gt; Max: 57.814 </span></span>
+<span id="cb5-348"><a href="#cb5-348" tabindex="-1"></a><span class="co">#&gt; Years of data: 20 </span></span>
+<span id="cb5-349"><a href="#cb5-349" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-350"><a href="#cb5-350" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-351"><a href="#cb5-351" tabindex="-1"></a><span class="co">#&gt; Summary for Years of schooling (%) :</span></span>
+<span id="cb5-352"><a href="#cb5-352" tabindex="-1"></a><span class="co">#&gt; Mean: 15.876 </span></span>
+<span id="cb5-353"><a href="#cb5-353" tabindex="-1"></a><span class="co">#&gt; Median: 15.876 </span></span>
+<span id="cb5-354"><a href="#cb5-354" tabindex="-1"></a><span class="co">#&gt; Min: 15.876 </span></span>
+<span id="cb5-355"><a href="#cb5-355" tabindex="-1"></a><span class="co">#&gt; Max: 15.876 </span></span>
+<span id="cb5-356"><a href="#cb5-356" tabindex="-1"></a><span class="co">#&gt; Years of data: 1 </span></span>
+<span id="cb5-357"><a href="#cb5-357" tabindex="-1"></a><span class="co">#&gt; Missing Values: 0 </span></span>
+<span id="cb5-358"><a href="#cb5-358" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-359"><a href="#cb5-359" tabindex="-1"></a><span class="co">#&gt; Data Completeness (percentage of non-NA values):</span></span>
+<span id="cb5-360"><a href="#cb5-360" tabindex="-1"></a><span class="co">#&gt;   country_code   country_name   indicator_id indicator_name       index_id </span></span>
+<span id="cb5-361"><a href="#cb5-361" tabindex="-1"></a><span class="co">#&gt;            100            100            100            100            100 </span></span>
+<span id="cb5-362"><a href="#cb5-362" tabindex="-1"></a><span class="co">#&gt;     index_name          value           year </span></span>
+<span id="cb5-363"><a href="#cb5-363" tabindex="-1"></a><span class="co">#&gt;            100            100            100</span></span></code></pre></div>
+</div>
+<div id="singapore-and-nigeria-comparison-1" class="section level3">
+<h3>Singapore and Nigeria Comparison</h3>
+<p>We note that Singapore scores higher on most metrics as a result of
+its higher levels of development compared to Nigeria. However, the
+detailed output is unwieldy. The plot function provides a better way to
+easily compare countries based on key indicators.</p>
+</div>
+</div>
+<div id="plot-function" class="section level2">
+<h2>Plot Function</h2>
+<p>The plot function returns a <code>ggplot2</code> object which
+provides a visual representation of the HDI data for the country by
+focusing on the trend of four central indicators over time: Adolescent
+Birth Rate, Life Expectancy at Birth, Mean Years of Schooling, and Gross
+National Income Per Capita.</p>
+<p>This is particularly useful for comparing the HDI data of different
+countries at a glance while the summary function provides a more
+detailed overview of the data for researchers who wish to investigate
+further.</p>
+<div id="singapore-2" class="section level3">
+<h3>Singapore</h3>
+<p>We see positive developments in all indicators.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">plot</span>(HDIdata_sgp)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>p1</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwAAAAJACAMAAAANcPFkAAAB5lBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrYAv8QZGUgZGXEZSHEZSJcZcZcZcboaGho6AAA6ADo6AGY6OgA6OmY6ZmY6ZpA6ZrY6kLY6kNtIGRlIGUhIGXFISHFISJdIcZdIcbpIl7pIl91NTU1NTW5NTY5NbqtNjshmAABmADpmOgBmOmZmOpBmZmZmZrZmkJBmkLZmkNtmtttmtv9uTU1uTW5uTY5ubo5ubqtuq8huq+RxGRlxGUhxGXFxSBlxSEhxSJdxcRlxcUhxcXFxcbpxl5dxut1xuv98rgCOTU2OTW6OTY6Obk2ObquOyP+QOgCQZgCQZjqQZmaQkDqQkLaQtpCQttuQ27aQ2/+XSBmXSEiXSHGXcRmXcZeXl0iXl3GXl7qXupeX3bqX3d2X3f+rbk2rbm6rbo6rjk2ryKur5OSr5P+2ZgC2Zjq2kDq2kGa2tpC2ttu229u22/+2/9u2//+6cRm6cUi6cXG6unG63Ze6/7q6/926///HfP/Ijk3I///bkDrbtmbbtpDb27bb29vb/7bb/9vb///dl0jdl3HdunHd3Zfd/7rd/93d///kq27k///r6+v4dm3/tmb/unH/yI7/25D/27b/29v/3Zf/5Kv//7b//7r//8j//9v//93//+T////zqP3xAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2di38dx3XfQdsiSCskkzRJKdKsQ1Ay674lylFIUXasJLiyUrJpG0eko7h2ILoO2TaNa7iRSpB00pRoo5DEJQAH4APY/7Q7s7OP2Z3ZnTOPu2d2zu9j64L3nj0zc+Z8d/Y5s5SRSAlraewKkEhjigAgJS0CgJS0CABS0iIASEmLACAlLQKAlLQIAFLSsgbg2cUloS/8dMj25fWj3S//y9LS0Yf8x1ceqjZQfc+0+88Gy8sd/LdfXVr64r9WOpDUbIauRNKENRoAT/MtjxY/wgB4MFxe9ouvF1X70k+GLAmAxOV0CGSaMWoA3tI7UQ4ZQgYAvLy+9Ot56v/iD5eM6keJn7C8AJDn64OlL/yE73j/0U/493/xq0tH/g377eenlr70l3U+MxO2X75TDR3MiWqDwjn710f86/yYJjfIc3tp6XTtRxT98g/zX98sC3nALMo/CmCeXTyaNepX1LfTjFce7p46/fNTeTlPTy39+sOs3oQ0UXkC4IunlljysEOJIx8VWZrrLZaC7Ejk6yUAT0uTNgDdDbjzp8K8+Do3EAA8rYtiRf+f6+XmhcdykHh2kdWKfc0GnF15o4fdZjDrX8utjvzRqeIIrdqENFF5AoDtcl9eZ/vgvz7Fcped3z7IM+jZxSPfzX5xfeloucHSmyyZeWo3DoFUGxTf57n389x5ntM/Yel4tDgEqv0URe+e+o2Hxa9MfG9f6E55ZM//aNTvtLIZHOI38xLz33dP8fLFJqSJyhMAbJebHz2wfzxgqcb+zfKw+K5KTfHHnTytWwB0NxAHJFVh//sv/v2pJQFA7acs+ov/6i8rSxmA7EFeWu26rp+iGazEo8XA0Szf5LybFKc8AcA+n4rLKSwr2b/ZmWyR5tU5bXE4kj3tAtDdoEhAYSSORWoASj+iCuyIip/4MrUAYFnM3Lbrp2wGT/nCwZ1XHtabuISJhFiRAPDs4tKv/cf//rcXdQBkf/31+oKsfA7AHTEQCABSVx4BqHfXdT4XxxDVLll/CNTdQDoEKnxX5wDNQ6Aql//m35UupatA+X+P/PHFo936KZshA1BvQpqoPAKQnzF+N8tPYMvzTpbP+Tntm/ycuNxAdxLc3aA6Cd7ll3Lyk+RffJ1t+KC4zFSdBBeDzz/O9/T/tdxRt+4D7J76F6ywdv2UzZABqDdxCRMJsTwCUB5jnG6MAMV3isugOgDqDerLoLlleZ2UAdC6DFpsWf5a6Jl0Jzj/lWdwq37KZsgA1JuQJiqfAGS7ed598c3mIRA/OP/S/6hvhO2KG1haAKoNqhth/AYXv/H1XXYonyd3PhrsVjfCeNH8Rthv1FktPwv0QIxAcv2UzWgBUG1CmqjoaVBS0iIASEmLACAlLQKAlLQIAFLSIgBISYsAICUtAoCUtAgAUtIiAEhJiwAgJS0CgJS0CABS0iIASEmLACAlLQKAlLQIAFLSIgBISYsAICUtFwCev7tW/HFwY1V8tXf27vB2hdHeaydzrZab5B/1xsVvx+/KW1TaPJ+trza+l7Y1Kjyv/JWTrz5qf/gWL2yz2RT+Td68/Iu9cwFKZNrOCzwxULHXVrNmWHsiKHrLNL5Z2XvnlfXqRLlbct67zMNqo1eYBQsj/7by3/7kBawC4+oCwPb754s/7ADgqXBmrf5S6o/8v5tVtGS3rIXrq80vzAHYFrnIqrx5ovXhW0Vhzaryb55fWeVty3s6hLbzIg5u9Pvee43VrB1wtSkcAGZb7R0rbfJgKPYznd5l2+aZUfVK2WnZNt+69N/5PPNnH39+9S4srg4AHNz84beKneeX31tlH2yvdvau+IvhyD7yfx1bK3899yc5ouJ3Xu2Dm6z6e195j+0lPz37OwXijaDzfQHfQmyWFRm1/r4YPVrbbpd72+dX/5QVXJb8lff41+vHfnBW/MwrK38UXDAo80gXGx7c/H6+c9nmO5hmI4q+qnZUX/7mWqvdVWF5E6uQFd8wgFkfs1L9q9gb5WXwNsuVquq2d/avTrQC/GnVdWULi+ZVfVF+3ezRbnjK3mPVkGJfEMEDzP2KDto7+xmzEqEsenf7BP8se6XutAKq0n/n89zff/xI9K2xHADIY8xT8Xwe11X+8eojXt/zjFtWC7Fvzb8vvtt7rTIqR4Bz7F9sQOYf55uMs70k3xcU+/fCRdm+de6ms60olVldefUR2xeWJbfGKJGE8kfGx9/NvDXsIIs7PLjBNj6R1TWoaykqxy3zrpTaXReWZ0HZt+KbqjRpGPOlan/K27zeDEtdt9xoncetDnDZkjywIpZ17LNGiOseVYan6tkza3Lst8t9v/ArOqgooQxlnb1Sr4g2ibiW/tufz6/8PgcAFFcHAPIk2S6CmseEfRSjkdi3NWkt93e896uQ8iO3Mo+z+qPxWxGKq3drt1mRu8UosNrZth542XFGvvNtlJzV0Su6I/9N/iic/+z7J9iGRYPY/pv9P/9TbkRZzFU+fNQlSUM/tz2z1hgFCiRywtjoFOQYqDoE5kUVrRCVquvGQvUtsScSjRIDoTikkH7KskyOdJZpw5PVZ3dy7Lebh5gsUEUH1Yevjd7N+DFco1eqLMoa/tufeUYUpx6QuNoDcHCDn9zxuvFUFM3hezw2tr3G/8vbI76TAagHsC4A+X/ZTrVoEy+kdCt2JT9bUwIgSi2jtb7aKLnQwAjw/OpnVz89+1nRbXmDmj0sNSKrK5dvzACQ2i0VxiqyXpyY7omT4N+8GQyAMgplRVn1RaWqurHvN88XfScCLIJYdGIm/ZRJAJwrx2hleBqtlmPfODflfkUHlfmwLo7OxOB65XyWtUeAcgwp/bc/83T6+PMcqwUBIHbE3RGgPgKrDnfEd10AlElcXj0R54v13kkqWAdP4/hE7MilGDV2N3vdc4Dc8e99NT+wPaHaxUmNyLKycuUIILVbKqwxKFfJwayDAFCcA4gduWhFo1L1MebBzR+cvVsHuDMC1D9lRiPA1VaIMzn21TlAGbaig0TJV6qTDda7xVFT3SsiV87L/tuf2ycOPmaHZgsCYHOVl6k8B8j/YoEWR4z5l/WvMgBFuNUA8OPL4hiidlvGdf1E49C1/hClMqsrJ/hf643Tjka02BDLT1GaHzyKJ4uzgPIcoO7hTGpEVh/g1OcAdbvrwtg/Dr7XLJ752izO86yj3yM+dG6LPa9UqbpuYiAq9u9FgOsYN0MqjrAbIZZ6tBuerIm9FPvyKpDwKzqo0Ytn1kTvirOGuleKfCiPI3UAPH/3zz7+HHpuZQ1A0adsJ3CjexWIdcF66yrQsbWsCuHxu40jOTH03uDXIZrEs7OuzZPMO9tCuM2qq0DH1hTbrldXgd79dnkV6Nha3SfVDlx3H4BfAxIVP14cP5Q9LDWC2RaVY9//0s21Vrvrrtk8WR8TFd9sF+c3Ya4CFZEVfVFemhGVWj/ZvFDDU7IK8Kdn7zY6kf2/+KkNQOsqUDs8WQOAVuzL+wCFX9FBIh9EKIveLS/5S/cB6jMYHQDVVbkFXQUaTUZ3OrrXoRv6n74zrwYMoED3ASKRroNc7g8e8KtAi7oPMJ5MWtgHwMF/8leX4mrAsR7adAp2JzgOaTvIdb+wuDvBJFL0IgBISYsAICUtAoCUtHwBsBXQOqw5JudwUSQdzQkATM7hokg6mhMASJzvX1p5/X6Wvfhg5Y0nmg/36mBpLCLnBAAO5y8+uJY9fuPJ4Sf5x9cy5YeH6iBpLCbnBAAO5/vvPMlefOf2iw/vZ/vfuK/88FAdJI3F5JwAwOFcAND3Ubok+VAZeAIAh3N+CHTh9s4bPNeVHx6qg6SxmJxbAzA2wVNRGc/8JPi3b5mMAJYdvQDzKJ3TCIDHeX6sT+cAi3ZOAOBwzvbw/ILPZe2Hh+ogaSwm574AmIOsqds62lnR3wCg+wBK65mx+SyXxpAAwOQcroQjOesjoDKf9SQ/k7dDIBABwFDB6MLdbZ6VLAA8q/WZXQMw4JcAwJQTcKUKwEz60JsP5T8BgCon4EoUgCqvdYc3iwcAlKWwts9hdOHttgBKE4CZ5u+uOQHg2ZoAGN95a6+vzPGtnt8kEQCYcgKuBAHoJLUqy0cAAEIAAeBL6QGgyGnFpU4CIJA1ATCyc21KyxRs9RvXigMA2HUghN0WTKkB0J/S4wIAyFJQ2+fAEwyE3RZOiQEwlNHV7wRAIGsCYLHO5YweTGigeUYA4MoJuCYOwKy65mnovMx5AiCQNQGwUOf1Az9bmVFCjwqAeZqCAQh4lwFTThi5TEiz4r+z5r+MNhm2L8NJAMQGgFMBmBo7bD5r/LFltD+vtjEcMGIAYA69xjp2tzk4hysNAPIzgS2z/AceMfl+JdI0TQkAX5oyADPtP4a3IgACWRMAC3Mu56+585kwN0MmFgDC3WfGlBNwEQDq7UYCwDRNCQBfmi4A6qfbTDTLCACAMOUEXASAekvTi0b4AZhnBIC/AjA1tt+8nb8Q54Crpt4nxjLLUwLAl6YKQCd9MQAg1nBQigDw4RwuAkC9tfFtAwAAfPa+oRnKggEQ6kkjVDkB10QB6KYvAgD4JMUfaoaAqn5GeeoOQF8xBMA45t6cq+Y6gTk3v3FsPQLoHjKamzyxZK654q8AxYwnUL92NUEA1FP9AAEwvnEMOQfomaO1UT+TIcC8NfPKfC5/3VMMjQDjmPtxPjDTlaFCALD/9u1sR3cW3KifAQEEgC9NDQDtrjtUzQEA9K3UIxU4TIANAE23895CCIBxzN2d9xy5IADAdAQwIMADAD2FRAkArRMMmfDfX10g5wA7KysXNANAsFApAZjL/1xUXUI6F1cYUl4nuP/EFQMA5gUODQHG1Zs3zCcNgLjGnO4aYUPXbeICYIgANwDmA2XECIAYAVJdJ3hm9L6vT5WBD7VIXj8BVgBUPqcIgDjOT3OdYJOr9pGNAAMEOAHQ4sDBu4V1sEOg4gpDiusEm920ig4APw8r9AGgLSFGAMRePr1zANN7tvEB4OVKvQKA1rmwi3cL68AjQGrrBJs/shAhANnc+SBlLplPGYDyGnNS9wHM0z9OANxTVAagff9rUgBYKmIAIOkfKwC6QcAPADoCCIBxzKEAhHSOBQBNktoDMFf8bOvdxpoA8OY8EQCUgwAB4EvxAjDD0U3hAVDlqTUAc+Xvlt5trAkAX9YEwLDKDSvz9mhCABAAjuaLAKCbp9YADDmGeLeyJgB8WRMAwxoEwO0U28aaAPBkPUPSTQsBoJOntgAMOoZ4t7ImADxZEwAGIgB8F4CnsWkB0E5UhbUqlYcBUG6GI7I2zuEiABzN8QDQTeXqGwLAVwFoGjvD0k1YAFDNc0IAeC8ATWNTA2BwYkPVRCcmAKgIwBFZG+dwEQCO5qMAoDnc0d7lAgJgPo3ukHNn8wAALPrl2TBa+DvAbZXhXBQA8mPMW8o7WtpRov8mQ5ubecd7r2IDwKkANI1NbgQwAUD7qDPgBIPhsNXzKk5XaHLCSpECMAvpHGRuDQB4zJlLfyjnep4rrI1cy77B248p2/iX3YDIPC0AwAU2J3PY0hzuaN53N3U+b7xCbDwGYMkJOxEAjuYLB2AurNUP9ls/3ZbnfnXcs1V+YyQsOWEnAsDRfHEANI/zt3TH++o5r4xa071oZEYAlpywU5wAlGtZB6sKXgDqgxT12+2Ky0H2jTciAElOWAo5AJrXHtMEoHGzSw+A8o6YdeNNCCAAfJl3rWcaApIFQDpKVx/4q56JIAB8FbBwANQEJApA6zRVc+br/GxD09yAAALAl3nHelb9R/VDigBI1gOXfqDO1ebDBBAAvszb1jPpo/NDggC0rNWXfJydEwAjmbesZ50/5C8IgEUAEHR48W1toRgA6BBAAAjr7hNAPpwTACOZy9Yzzd8ZASADEPo8dcg/AeDLXLKWc36m+AcBoHwLwN1523ygAALAl3kPAKrxgABQ3/Vydh4lAI9XmK5NZn0AzYlv808CIFPf9nJ13jHvLwIHAEw701knWHfps/knAZAtCID+MtAAwNbBm8gaYdqbX80/CACmhTyvFgcAbCc/kXWClW/8zvp+XLjKqCcBQG8pWADgKT6NdYJ7noDLaASAW3sw7yEACwAszU1GAJfqjApA+9EIHCmTCAA9BGAB4N7l/D+TOAfQrX1EAFhaezHXEoAEgMNbbBc/iXWCtYt/yU+H4kiZZADQEoAEAHGMM4H7AD2L380yAsDCGkuOhncOF8JIEgC+rT2Za4YAAsCX+TAA0itiOFImIQDs51yxN08QgP7lfxvLw+NImZQA8LGeDAEwZE0AeLf2Z+6+mgABMGA9tP57zAAcfrJyQX07BktrBs29vnHv3dpC0QHg5DyAOQSAe9eK25VOBVpYEwDeCiAA2gIAwG5IuhdoYe3T3OOkQ/6tLYQNAPP8R5IyAAD23/nPjUOgsZ/msxS6adNh/doRAeBoDgHg0jX+sJZbgRbWXs39zbvo39pCBICjOWgE0D+UiKQ1BuYEQDDzLVD+I0kZyDnAv50CAN6mng5gbSECwNEceBUo/kMgAiCY+RYo/5GkDASAFx+svK67EISjNUbmNqtv2JoTAP6chzFP604wV+QAjH3Zqk84Xvc1UhnOBAEAr8DnYJ7WCAAaAJCkDAFAAPgyJwACWRMA3goIag7LfyQpkyIAMgEEgC9zAiCQNQHgrYCQ5jNMkSQAetUkAFO3wTV2JBsiAEJZEwDeCghoPkMVSQKgXw0CMHUbXKNHshIBEMyaAPBWQDjzGa5IEgADqgnA1G1wjR/JQrPQdSEA/JoTAH7NCYCA1kHM5UW7Q9UlFQAsln5HkjIEAKZugwtBJJkIABytgZiXBGDqNrgwRNJu4V8kKZMuACUBmLoNLhSRtFr1DknKJAyAIABTt8GFIpIEAJbWAM3nwetibi2m3YtxfQC7JV+QpEzSAGByXky7F+U6wQQApEAL63Dm89B1MbYW0+7FuEaY5YT/SFImbQAYATi6TUy7F+E6wRG9B9xUGfjEAcgJQAJAMe1efOsEN96CwRFJoHnqAGRzHN3Wt+vHvE5w8y0wHJEEmicPQDY3Wqze0rn5OUAx7V5s5wDSW5BpATD2MZxHzecjzhldxrOYdi+ydYLlt4DTAsC2QAvrBUR2bjwOhGqomHYvxvsAUTsnAEprQwToTnCt1jQQBEAg60VF1ggBAqBSexoUAiCQ9eIia0AAAVCqMw0QARDIeoGRHSaAABDqToNFAASyXmRkBw+DCIBCimngCIBA1ouN7AABBADTTDUNIgEQyHrBke0fBJICQDfbp/p7AiCQ9cIj20dASgDMtpR7euWXoetCAIQyJwB04nO9dZNdOwk0ARDIevGR7SEgHQDEXG+t/b1u9x+2LgRAOHMCQK16qqs65Wc96U8ABLMeIbJ6AiYHgCalmzP98LSf9We/l7qM4JwASByAWd/CLpX5YPJ7qcsYzgmA5AFQEmAz1RUBEMh6jMhqCRgdAL+vI8y2lG/1RvqiL0BlOAmA2ABwKqBtPmv8t/M1ql6lESCUucZaR8AUAWgTYDnRCQEQyJoA8FZAy3zW+UP+B6JeJQBCmRMArb+sJzohAAJZjxNZDQFTAmDW/Vu+3ImoVwmAUObpAtA97mlf7UfUqwRAKHOttZqAqQLA7og5vuRIAASyJgC8FdA0b6e78zteBEAg67EiqyRgMgAYPNuAqVcJgFDmBIAv7wkAwJZqcCzQwpoA8FZAbW6S/5h6FQcAj1dSAkBJAAHgvy5jOgcBsP9bf0AABKyKhWxDY5T/mHoVAwCHt/68PgQa+2m+hWgBs0aDurUru7wwebof7n3yADy+nNY5gHIImMIIYJj+qHoVAQB8+vq0AFAQED8Aprt/sPepA/B4hemyY4EW1kkAwKL7+v0FrA9gnv6oehUBAFlql0GZOgSEaug9Htng6wQDdv9g7wSAseIBoENAoIYe3uKL4IVeIwyU/qh6FQcAHgq0sB43si0CAjU0P8pZWbkWep3g6b/qa6wy8AQADgD2377NRoGw6wTP4txJB3VOAAxaywSEbOi9a0HXCZ6NHUmMzgmAYWuJgLAAhDwHqOc6NBaiXiUAQpkbWDcJCNRQdphz+KP7AdcJbs51aCpEvUoAhDLHAQC7D3DhdsB1gm2mesPUqwRAKHMT6wYBQRsKl2kBM5g50HvEzgkAI+uagDgBsJvqDVOvEgChzM2sKwKiBMByqjdMvUoAhDJPAADbqd4w9SoBEMrc0LokgADwZI3EOQFgaj0P6dxaJgVYz3WIqVcJgFDmBICb98idEwDG1vOQzm1lUEDzCVAckcTknAAwt56HdG4pAsDRnACYOgAO0z1j6lUCIJQ5wHoe0rmdCABHcwIAYj2PDwD5HTA0kUTjnACYNgBOE/5j6lUCIJQ5yHpOAPiyRuKcAIBZz+MCoP0SPKJIInFOAMQGAOjVb3oLXqcynAQA0Ll2BW0fzuHqL8BxzSNMvUojQChzAsDW+yScEwBQ5yACxgWgOw0WqkiicG4NwNjHcKPJ85TptvEvu6HvRwJgWDQCgJ1DhoBRRwDnZR8x9SoBEMp8sgCo5gHFFUkMzgkAuHMAASMCoJwHF1kkETgnACYKgHoeaGSRROCcAJgmAJp50JFFEoFzAsDCuTkBYwGgWwcAWyTHd04ATBEA7ToY2CI5vnMCwMa5MQHjAKBfBwZdJEd3TgBMD4CedZDQRXJ05wSAlXNTAsYAoG8dMHyRHNs5ARAegDkTrBRgdZrqXQcPXyTHdk4AhARgXud+IATatR9YBhVfJMd2TgDYOTdIZ5b6W9K/++35GrSOC2QMLYOKMJIjOycAwgAgdvxbrS/7Nnm8cs11oezBZYARRnJk5wSApfPeXK4yve28B4H93/qDa24LZRusAo8xkuM6JwD8A9DI8q5z3XaHt/78E7eFsun9X4jKuBMAts51mSzt5M2dP77MjnTsF8o22P2D6mNhHqVzAsAaACUBrW+Nned7+UOzEUBZHbP0RxrJUZ0TAPbOuwh0vjF2/niF6bLdOYBp+qON5IjOCQAX51LCq+52QZyzEcBmoWzz9EccydGcEwBuzouk197rhQIAvw8ASX/UkRzJOQHg6rz3OQegc7hA6Y88kqM4JwAwOYeLIuloTgBgcg4XRdLRnADA5BwuiqSjOQGAyTlcFElHcwgA+5dWVq65FmhhHWdkbZzDRZF0NAcAwG5G7r+tviGJpDU25picw0WRdDQHALDD7sXc0wwBOFpjY47JOVwUSUdzGYAHS0tvPXjlod7c4KFEEkiwfu2IAHA0lwC488rfXnzr5fWjWmt2U96xQAvrOCNr4xwuiqSjeROAZxffyv+XPf3CTzXGLz7Q5T+JFKcgAOxf0l0DIpEilXQI9IAdAj27eFptSvlPmp7kk+CnS7k0+S8eWScISFOSrzvBJFKUIgBISUs+CV7i0l4FIpGmpu4I8OyffjRCPUikUaQ4BHradyuYRJqUVADQIRApGSkAuEMjACkZKU6Cj9A5ACkZ0WVQUtIiAEhJqwKgvAlA9wFIKYlGAFLSwgPA3tm74uPgxsnz9devncx1bG1oOyPvhbPVRlnNrTfPazYufZx7ZFBSPNp77UT+3/Xjuvgd3OC/nzBwJbrs+ZWTJyt3yo5phbzWWMGXANg9NeIhUB0XKUKD+Q0CgP1378xa/WVj6+EQD3VSZNo7808eZc+/qY8fixQkvM+vrOZBevVR8zuloeL7sYLfBODl9dMvr/N3YsZQtVf+7Eq+w8/3JcfvNr7O1s9nmyeeX/1TPhiIX/OPYz9kf7I9e75fP/cn7IN/vba+KoLKfxMbcGcHN9dY5n/lvXwwOP7p2d/h27ASVrNio9K4cPqV947f3S52bM+vmiRDNNo7++08wd/PYyK3WIQx43v/PO6ZNiCZ+I1HXIT3+btrRQ/sidDWnZV/FPucRk99+Zt8dzRa8FtvhGV3To/1KIR8WMLzvfF13v7PruaBfvXR9vHy14Mbq9n2q3939i6LOdvutfP5vx8VX/+//O/zWdEf1Z6+GAHOPeLGq41tsiLA23yjwnvldJX/xGuzvjpGZEJp7+xfrWb/9wdVtOUwMovn7/6A7UT0AeG/5cZFeA9uFJuJjhF+1psfAoDGT/zodrzgtwF4cHSsRyEkAPhu5Gp92J4HazM/ymRjbL4DF782kjor/13l+vNvPfpZeahT2wpnwqr+yIpBmG9Ul11uyL7hmtYx0N7ZT7968L1Pm9FuhJGbbPL9tD4g/Pv8X6X9Nj9dqzuGdWVhURvWUWff5d2ZjRl8eVYInv2986KEkwzAlfLMtzpoZAekPBjrq+JXcYjDDNbZMFnmNP/64OYPv1UcVla/lYdAN1ZVALA9Et+oKrveMAeHV2ZqAPyvjz//3Wa0m2EUJsXBiy4g3KA4pqy8nml0jIiwsBAHn2ebPVUAMF7wJQDyk4DszliPQsgAVAd8VWjX3y9GRjYCXG2cHvAOXM3knM61+f559tH4rdxiXQkA7zW2UbkDam5YdNHkALj7s++fr6Mth7E0yfoCIo8A2/yoiIc3g48A4wQf42VQcQ5QRLjqinN/n2f+lRON40l2qJkP4yKeZ9ZEWIuv74qLPY3f6rM0FQA89Hyj+rBWbMiK5LWZ2jnA3e1ja3W05TCWJllfQORzAH4VKA9v1TFZoyulc4DGT9U5wDjBr+8E/8sQ7gEqjs9PiPCI6wrl1yd/n59Xff7ut8urQNXHwY3jdzdPnvzye6tlWItfD75XHsay35iVdB+AD8k3jn9a9zYLMN9IeK+dFuPxBK8C3ZWjLYdRmGQ9AckaF3fEP+qOaXRH5ypQ/dMv3SyvAo0T/OajEPgfgahPvoa191WgczYM9280rSMgHCoH/rGC3zgEYk8DjXMLwFgAADZ7bh7rNjnfv9HU7gSProMb9T3+sYLfmRxXNysQiTRFtU+C82GAXggjpSN6J5iUtGgEIKBnLLUAABQrSURBVCUtX+cAOCZ7tzHH5BwuiqSjua+rQDhaY2OOyTlcFElH8+Z9AJdnIHC0xsYck3O4KJKO5jUA/9zp0B9Ha2zMMTmHiyLpaE4LZWNy3tX+N+73LtBMkXQ0JwAwOe9oZ+X1+70LNFMkHc0JAEzO27p34cf5CNC3QDNF0tGcAMDkvCt+CJTRAs3eVQaYAMDkvCsBgHaBZoqkozkBgMl5VwUA+gWaKZKO5gTAop0vgxyIq0DatTlTjmSPNrrSWBIA+AHoW6A55UhqxLOdRgCszmH5zwHoW6A54UgqVe7qCQCszoEAwAsYz3x0540DHQIAq3MCIJRz6TCfAEDq3HP+JxzJllpnuQQAUucEQBDnnYs8BABS5wRAAOeKa5zhARj7VjZqLZv/YBv/shsQmY/lXHWJn0aAMZ0vV/v5trXvAWDqkTSwVt/iIgDGc87Sv0x0AiC0c80dXgJgNOfL1X+61t7zf9KRNLHWPeFAAIzlfFn6IAC8Om8/1qN9wocAGMl5dfRPAPg1lzK//Fub/gTASM6X239u6X72palGUpbq6Tb9A54g5wSAP+fLzQQnALyZ80wP5ZwA8OV8uZXey11rAsDCHPp4J7AuBIAf5+30VwEQIP8nGElJ9XEOARDK3IfzbvoTAO7m0lE+ARDK3N25Kv2zIt8JAFvz9jkuARDK3Nm5Lq/bAITI/2lFspLiCg8BEMrc0blm989/IgCszJXXNwmAUOZOznvSnwCwMtdd3icAQpk7OO9Nf/Z70zpI/k8lkqU8PNsANCcArJ0PpT8BADHvnbzH1XmPCABL58Ppz4wIgEHz/nmrHJ0PiwCwcm6U/hIAYfI/8kiaZL61czMRABbODdM/a6Y9AdCWefJbOCcAwjk3T3+GSuv5aN+KN5IbOFKGAIBZL0PSnztfXm6+I+lb0UYSMH2nRVUIgDDWy8t2zoHYwAtAYU4ABLJG0m1FFgdtKFxRRjLjL3PhSBkCwNC63IcTAD6s4a+4jADA/iW2RGFjjU42Tffr9x0LtLAev9uW9TP9+KyKhWKLZKGNkM5h5noA2LJsj9940lijU7NQIaxAC+uRu00+gB8dgKBT2i1IG2NXwGSRvP13nmQvPrxfr9F5eEu9VG3RLbBOBFmPCUDn9HV0AJwKwDEC2LzkONoIUP7JVmprrlMyNsEL0bJ2kk9vgvVrRzECsBHSOdS85xwgT/gi/8UanexASDsK4GiNjbneWnntkkYAV2u7t3wXDwDL9x12ziut0ak7D8DRGhtzrbX60j0B4GodCwA7+e6fnwFLaxQmA4Du1hUB4GgNX8bLwtrjCFDnPyPi8EeJXAbV3rklAOyt5eeecaRMzznAzsrKhdvlGp1iuc4LugtBOFpjY66y7nlygQCwslY8848jZehOcNe698EdAsDG2v01dwIglHnbeuC5NQLAwtptERcLawLA1nrwsU0CAG7tY54HAiCUedPa4KllAgBs7bqKkYU1AWBjbfTQPgEAtXZexcjCmgCwsDZ7Z4UAAFp7mumHAAhlXlobvrNFAMCs9S++40gZAqCwNn5nkQAAWXub6ooACGXOrc1f2SUAtOpOc+JnGS8LawIAZg14ZZ0A0Gljq5XwA/P+4EgZAgA20Q8BoFMxzUNzKVOvdSEAQplvwWYsIQDUqqZ5KFbwNZj0DUfKEADAGXsIAKWa0zwYznmII2VSB2B5OezwAnMOF5JIWkzzgCRl0gZgeRlXt8GFI5Jhl/IN6jxlAJYVa1l7rksaAFi95Y4kZdIFwG6qNwKgq9BrWQd1niwAllO9EQAdWb7kiyRlEgWgcekfU7fBNXokM9uXfJGkTJIAOMx1SAC01LjiiSmSBECP5Cv/mLoNrrEBaF7xxxTJ8AAEnzMwlBYw3SFEtvEvu2Fcc+mOV1oA2BZoYe3TvPvcD6Zug2tcAOQ7vpgiSQCopXjuAVO3wTUqAE4T/SBJmaQA8DDbLQFQq/3ED6ZIEgBdaZ56xtRtXbEZ+ep5up0L8GneeeINUyQJgLa0D/1j6raOdtiaVIefXMsef81LAR7Nu098YookASDL22SfiwXg3oUf5yPAiw/vFyOBewH+zBVPPGOKJAEgyd9kn2McAvHFqr5TTks89nXbQghW+XJTGeAUAOh/5RE/AOVKDR4K8GXuYbJPJCkzfQCG3vjF1G1ddUcApwI8mfuY7BNJykwdgOEX3jF1W1f7GM8BvEz2iSRlpg2AyXwPmLqtK5b4bJFCfFeBJuJ80gAYve+Oqdu6wngfwM9st0hSZsoAhJjtdtEAeC7Ah7mn2W6RpMyEAQgy2y0B4Gu2WyQpM10Awsx2mzwA3ma7RZIyUwXAfLpDTN0G16IB8DfbLZKUmSgAwWa7TRyA3infMEUycQDCzXabNgA+p3tGkjKTBAA03SemboNroQAMTPmJKZJJAxByuueUAfA73zmSlJkgAMDpbjF1G1xj3AiblPPpAbCMqC6TAmBwznNMkSQAwjhPGIDhOf8xRTJdAMATnmPqNrgWBoD3JV+QdFMPAPuX2AupjSexep7JQtKa4gQYS13gzuFaFAAma75giqQHANgrGI/feFK/kd33bjaS1mQWM/5j6ja4FgRAgDWPkHSTHgD+HtKH9+u3Mfrey0DSGgIgjLlR/qOKpL8RoH4fD+O72S3hmvbTSLB+te9oF3Oz/J8aAOKQv34ju+/dbBytsVrzBVO3wbUIAAzzH1UkfRwCvX0723n9vm4EcKpfmNaUd4Ax1MXOOVwLAMA0/1FF0gMAYocf0TkAATCueZTOB0eA+o3svnezMbTGctUvTN0GV3gAjAcAVJH0cQ6ws7Jy4XZ5KsCn50B9H8B21S9M3QZXcADM8x9VJH0AEKZAC2sj88YjoKPXxdo5XKEBAOQ/qkgmB4D9sneYug2uwABA8h9VJFMDQHoFAEdkbZzDFRYAUP6jimRaALTegMcRWRvncAWt/Ua8kUwKgPYbYDgia+McrpC134g4kikB4LjuI6Zugytg7TdijmRCAHTfAMYRWRvncIWr/QbYO6ZIpgLAsmoCLByRtXEOV7Dab8C9Y4pkCgAsK7N/nLp4cg5XqNpvWHjHFMmpA6BN/hHq4tG5kctFKPolwAZVhjNCAHqTf8F18ewcrjC1L6//xxvJyY4AQ8m/yLr4dw5XkNpX97/ijeQkARjc9S+wLmGcwxWi9vX933gjOTkATJN/EXUJ5xyuALVvPP8QbySnBQAg+eHeMXUbXP5r33z+J95ITgoA4GSfSCJr4xwu77WXnn+LN5IEQCDrqQMgP/8ZbySnBAB0sk8kkbVxDpfn2reef443khMCADzZJ5LI2jiHy2/t28//xxtJAiCQ9aQB6Lz/Em8kpwMAfLZbJJG1cQ6Xz9p33/+KN5LhAVjQIxsRTnYIk238y27wZ654/xFHjgZ1jnwEWLZwjiSyNs7h8ld71fu/8UaSAAhkPVkAlO+/xxvJiQBgNdstksjaOIfLV+3V8z/EG8lpAGA32SeSyNo4h8tT7TXzn8QbSQIgkPVEAfBiHqVzzABYznaLJLI2zuHyU3vdBFjxRnIKANjOdosksjbO4fJSe+0EcPFGcgIAWM92iySyNs7h8lF7/QSI8UYyfgDsZ7tFElkb53B5qH3PBKDxRjJ6ABxmu0USWRvncLnXvm8C3HgjGTsALrPdIomsjXO4nGvfOwF0vJGMHYAFmmNyDpdr7fsnQI83kpED0HoFOMrI2jiHy7H2AwsAxBvJuAFwm+8cSWRtnMPlVvuhBTDijWTUADjOd44ksjbO4XKq/eACMPFGMmYAXOc7RxJZG+dwudR+eAGkeCMZMQDO850jiayNc7gcam+wAFi8kYwXANUUWFFG1sY5XPa1N1kAL95IEgCBrCcDgNECkPFGMloAlHMgRhlZG+dw2dbebAHUeCNJAASyHgWA/Usrr9/3UkBpbrgAcLyRjBUAH2seIYmsjXO1Xnzndvb4jSc+ChDmpgtgxxtJAiCQ9RgA7L/zJHvxoXoIsKq98QLw8UYyUgA0s6BHGVkb52rJI4D7VETTXwDMQGVw9QA8XmG6Jj7Kb/wcixIAIL34YEVzBBS29hFH0tMIsFPEXXzcu+ahwD5r3TIYUUbWxrla+2/fznY0ex6L2hsfAMUcST8AsLG3/ji8ddtDgX3WBIBSbP8j+sC1gC1Q/kccST8APP5a8yMfiMWxEC/BvyY/D6hKBn3kdQSA5D+SHA3qvA8AeQDg/aAdBXy0RrsQWJSRtXGu0c7KygUvcc+2QPkfcSS9ACCfARTSnQd4aI2vpd+RRNbGOVzAAmD5H3EkvQBw73LzQ3xHAAR0DhesgA1MjcXhvAcAcbhTHfWwkeDwR8Eug/ashBplZG2cwwUqYANVY3E47wFAOgXY/8Z9dh9AdyhKAHhxDhcB4GiO5k5w31LYUUbWxjlckAI2cDUWh3MsAPQuBR9lZG2cwwUoYANmDvQeq3MCAJNzuMwL2ICZA71H6xwJAL35H2dkbZzDZVzABswc6D1e5wQAJudwmRawATMHeo/YOQ4A+vM/zsjaOIeLAHA0RwHAQP7HGVkb53AZFlDeAcbUWBzOCQBMzuEyK6B6AgJTY3E4xwDAUP7HGVkb53AZFVA/AYSpsTicEwCYnMNlUkDjCThMjcXhHAEAg/kfZ2RtnMNlUEDzCVBMjcXhfHwAhvM/zsjaOIdruADpCWhMjcXhnADA5ByuwQLkNwAwNRaH89EBMMj/OCNr4xyuoQJab8BgaiwO5wQAJudwDRTQfgMMU2NxOB8bAJP8jzOyNs7h6i+g8wYkpsbicD4yAEb5H2dkbZzD1VtA9w1gTI3F4XxcAMzyP87I2jiHq68AxRvwmBqLw/moABjmf5yRtXEOV08BqhkgMDUWh3MCAJNzuPQFKGdAwdRYHM7HBMA0/+OMrI1zuAgAR3NrANwnBUxyJsSObONfdoPuB/UUWFHmaFDn440Axvv/SCNr4xwuXQGaKeAwNRaH89EAAOR/nJG1cQ6XpgDdFIiYGovD+VgAQPI/zsjaOIdLXYB2ClBMjcXhnADA5BwuZQH6KXAxNRaH85EAAOV/nJG1cQ4XAeBoPgYAy8uw/I8zsjbOjVwOihbBM1AZzkUDsMyzP2jSTRyAwQL61gDA1FgczhcIwPJytesnAHypW0DvGhiYGovD+YIAWJYPewgAX+oU0L8GDKbG4nC+AACWu8f8BIAvEQCO5sEBUJ7wEgC+1C5gYBEwTI3F4TwwAJrrPQSAL7UKGFoED1NjcTgPCoD2cicB4EtyAYOLQGJqLA7nAQHoudpPAPiSVMDwIqiYGovDeTAAem92EQC+1CzAYBFgTI3F4TwQAAP3egkAXyIAHM3DADDqfOdIImvjHK5GASarwGNqLA7nIQAYftSHAPClugCT/EfVWBzO/QNg8qQbAeBLVQFG+Y+qsTicewdg/KnekETWxjlcZQFm+Y+qsTic+wYAwVRvSCJr4xwuUYBh/qNqLA7nngHAMNUbksjaOIerKMA0/1E1FodzvwCgmOkKSWRtnMPFCzDOf1SNxeHcKwA4ZrpCElkb53BRJB3N9QA8XmG6xj9fv8++efHByhtPego0f9GRus2XWAHmAwCqxuJw3j8C7OQJf++a+MfhJzkNX9MXiGWmKySRtXEO1xYo/1E1FofzXgBefOd2dnjrdvmvD+9n+9+4rysQzUxXSCJr4xyuLVD+o2osDue9ALD9fX7cww6Ecu2/84QjIUpoiWb6tBOsXzvaAuV/nDka1HkfADzb998uRwF2PFQD0BKiiX6QRNbGOVyw/EfVWBzO+wDYqU55+XmAPALYFmhhHWdkbZzDRZF0NO8D4N7l6i8GwMA5AETUbb5EkXQ07wGgPvA5/BFL+8NPLvdeBQpRvQWYY3IOF0XS0bwHAHG483hl5cJtvusfug8QoHoLMMfkHC6KpKP52OsEj2+OyTlcFElHcwIAk3O4KJKO5gQAJudwUSQdzQkATM7hokg6mhMAmJzDRZF0NPcFAIkUpQgAUtIiAEhJiwAgJS0CgJS0CABS0iIASEmLACAlLQKAlLScAOCvx+xf4rOmiI++R6ZBri/xN5GFO/nDs3PRjjDO20V5UcC4Jxd4FwB2WOhffHAte/zGE/HRO3UKQOxdhP23bwt38odn56IdYZy3i/KigHFPL/AOANy78OMcYPGmsPjofW0SoB1W6XvXhDv5w7Nz0Y4wzltFeVHIuKcXeOdDILkjel+cB6rjNYzzTGqHf+e+a56FjntagXcGgI/BF26Lj96pU2BiryALd/KHZ+dZ0Y5gzuV/eVHQuCcWeC8nwb9967b48Ifziw8uZ8F2c03nme8dkey8VZQXhYx7aoF3ByArJkwpPrwdi+5faszE4vlQVHaeiT1qGOftorwoYNyTC7z7IVDOlzjr5tcLeqZOgXjm1S/dyR+enWdFO8I47xTlReHinl7g3UeAnRV+pVV8eLqoW87NHuRydMu538vRsvNOUV4ULu7pBZ7uBJOSFgFASloEAClpEQCkpEUAkJIWAUBKWgQAEr28/oWf5h+7p46OXZO0RABg0e6p0/l/77zycOyKpCUCAI0e5EPA7qm3xq5GYiIA0OjZxaPZHXYA9PL60hI7Hto9tbS0dDrb/ZX/wP9JCiECAI+eHvmjX/6I5X9OwYNXHj67+BYfFui0IKQIADzK9/zsNOAp293n2f8P7Gxg95c/osOikCIAEImnfvZgiStn4Wn+ceSjXTYskAKJAEAkAYC4EPTs4pGP+AhAAAQUAYBIBQBPjxQJ/5SB8JRGgLAiABCpAODl9Tzz88RnIOyeIgDCigBApAIAfhmUjQJ38o8/vvgWARBSBAApaREApKRFAJCSFgFASloEAClpEQCkpEUAkJIWAUBKWgQAKWkRAKSk9f8BYA5qLQZqbe8AAAAASUVORK5CYII=" /><!-- --></p>
+</div>
+<div id="nigeria-2" class="section level3">
+<h3>Nigeria</h3>
+<p>For Nigeria, we also observe positive developments in all
+indicators.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">plot</span>(HDIdata_nga)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="singapore-and-nigeria-comparison-2" class="section level3">
+<h3>Singapore and Nigeria Comparison</h3>
+<p>Both countries are on positive trajectories despite the different
+values on their axes which reflect differing levels of development.</p>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>The <code>HDIsummary</code> package provides a simple way to read in,
+summarise, print, and plot HDI data for different countries.</p>
+<p>By easily comparing HDI data across countries, researchers can
+quickly identify trends and patterns in the data which can be used to
+inform further analysis and research.</p>
+<p>In this case, we highlighted two countries with differing levels of
+development but which are both on positive trajectories. But the package
+can be used to compare any two countries of interest, and a particularly
+interesting area of research would be to compare countries which are not
+necessarily on positive trajectories - a country such as Afghanistan,
+for example, which has been in conflict for many years.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
